@@ -65,11 +65,7 @@ class PartTest {
 
     @Test
     void testPartToString() {
-        assertEquals("Part{" +
-                "name='test name'" +
-                ", partType=" + PartType.TOKEN +
-                ", card=" + card +
-                '}', partOne.toString());
+        assertEquals("test name", partOne.toString());
     }
 
     @ParameterizedTest
