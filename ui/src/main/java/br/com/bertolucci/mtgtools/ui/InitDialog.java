@@ -121,13 +121,13 @@ public class InitDialog extends JDialog {
             }
 
             private void downloadSetImages() {
-                currentTask = "Baixando imagens dos sets. Isso pode demorar alguns minutos";
+                currentTask = "Baixando imagens dos sets.  Isso pode demorar alguns minutos";
                 deckBuilderService.downloadSetImages();
                 current++;
             }
 
             private void downloadSymbolImages() {
-                currentTask = "Baixando imagens dos símbolos. Isso pode demorar alguns minutos";
+                currentTask = "Baixando imagens dos símbolos.  Isso pode demorar alguns minutos";
                 deckBuilderService.downloadSymbolImages();
                 current++;
             }

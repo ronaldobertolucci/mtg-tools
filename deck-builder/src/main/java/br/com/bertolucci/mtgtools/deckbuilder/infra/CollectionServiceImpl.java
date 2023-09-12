@@ -60,6 +60,7 @@ public class CollectionServiceImpl implements CollectionService {
                                               String format) {
         try (Session em = (Session) this.emf.createEntityManager()) {
             QueryService<Card> queryCardService = new QueryServiceImpl<>(em, Card.class);
+            queryCardService.getRoot().fetch("set", JoinType.INNER);
             queryCardService.addEqual(queryCardService.getRoot().join("set", JoinType.INNER).get("id"), setId);
             HibernateCriteriaBuilder hcb = (HibernateCriteriaBuilder) queryCardService.getCb();
 

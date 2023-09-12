@@ -149,6 +149,11 @@ public class DeckBuilderServiceImpl implements DeckBuilderService {
     }
 
     @Override
+    public void updateCardDeck(CardDeck cardDeck) {
+        collectionService.getUpdateService().update(cardDeck);
+    }
+
+    @Override
     public void removeCard(Card card) {
         collectionService.getRemoveService().remove(card);
     }
@@ -171,6 +176,11 @@ public class DeckBuilderServiceImpl implements DeckBuilderService {
     @Override
     public void removeDeck(Deck deck) {
         collectionService.getRemoveService().remove(deck);
+    }
+
+    @Override
+    public void removeCardDeck(CardDeck cardDeck) {
+        collectionService.getRemoveService().remove(cardDeck);
     }
 
     @Override

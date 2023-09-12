@@ -6,6 +6,8 @@ import br.com.bertolucci.mtgtools.ui.AbstractListDialog;
 import br.com.bertolucci.mtgtools.ui.util.OptionDialogUtil;
 import org.apache.commons.text.WordUtils;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,6 +18,29 @@ public class DeckListDialog extends AbstractListDialog<Deck> {
 
         load();
         init(contentPane, "Meus decks");
+    }
+
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                int tableLength = table.getColumnCount();
+                Deck deck;
+                if (table.columnAtPoint(e.getPoint()) == (tableLength - 3)) {
+                    deck = (Deck) table.getModel().getValueAt(table.rowAtPoint(e.getPoint()), (tableLength - 3));
+                    build(deck);
+                }
+            }
+        });
+    }
+
+    private void build(Deck deck) {
+        new DeckBuilderDialog(deckBuilderService, deck);
+        load();
     }
 
     @Override

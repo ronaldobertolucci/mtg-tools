@@ -50,6 +50,8 @@ public interface DeckBuilderService {
 
     void updateDeck(Deck deck);
 
+    void updateCardDeck(CardDeck cardDeck);
+
     void removeCard(Card card);
 
     void removeFace(Face face);
@@ -59,6 +61,8 @@ public interface DeckBuilderService {
     void removeRuling(Ruling ruling);
 
     void removeDeck(Deck deck);
+
+    void removeCardDeck(CardDeck cardDeck);
 
     void importCardsBySet(String setCode) throws NoApiConnectionException;
 
