@@ -1,7 +1,7 @@
 package br.com.bertolucci.mtgtools.ui;
 
 import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
-import br.com.bertolucci.mtgtools.pngsvgtools.DownloadImageService;
+import br.com.bertolucci.mtgtools.ui.deck.DeckListDialog;
 import br.com.bertolucci.mtgtools.ui.download.DownloadCardsDialog;
 import br.com.bertolucci.mtgtools.ui.set.SetListDialog;
 import br.com.bertolucci.mtgtools.ui.set.SetManagerDialog;
@@ -24,7 +24,15 @@ public class MainMenu {
 
         createFileMenu(menuBuilder);
         createCollectionMenu(menuBuilder);
+        createDeckBuilderMenu(menuBuilder);
         this.frame.setJMenuBar(menuBuilder.build());
+    }
+
+    private void createDeckBuilderMenu(MenuBuilder menuBuilder) {
+        menuBuilder.addMenu("Construtor de decks");
+        menuBuilder.addMenuItem(2, "Meus decks", (actionEvent) -> {
+            new DeckListDialog(deckBuilderService);
+        });
     }
 
     private void createCollectionMenu(MenuBuilder menuBuilder) {
