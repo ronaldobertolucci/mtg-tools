@@ -24,7 +24,18 @@ public class AddCardToDeckService {
             throw new IllegalArgumentException("O deck ou o card não podem ser nulos");
         }
 
+
+
         try {
+            if (cardDeck.getQuantity() > 0 && (cardDeck.getCard().getTypeLine().contains("Basic Land")
+                    || cardDeck.getCard().getTypeLine().contains("Terreno Básico")
+                    || cardDeck.getCard().getTypeLine().contains("Basic Snow Land")
+                    || cardDeck.getCard().getTypeLine().contains("Terreno da Neve Básico"))
+            ) {
+                collectionService.getSaveService().save(cardDeck);
+                return true;
+            }
+
             if (GetCardDeckLegalityService.get(cardDeck.getCard(), cardDeck.getDeck()) == Legality.RESTRICTED
                     && cardDeck.getQuantity() == 1
                     && validateName(cardDeck.getCard().getName())
