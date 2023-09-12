@@ -1,5 +1,6 @@
-package br.com.bertolucci.mtgtools.deckbuilder.domain.card;
+package br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck;
 
+import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
 import jakarta.persistence.*;
 

@@ -1,4 +1,4 @@
-package br.com.bertolucci.mtgtools.deckbuilder.application.deck;
+package br.com.bertolucci.mtgtools.deckbuilder.application.carddeck;
 
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;

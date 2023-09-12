@@ -1,8 +1,7 @@
-package br.com.bertolucci.mtgtools.deckbuilder.application.card;
+package br.com.bertolucci.mtgtools.deckbuilder.application.carddeck;
 
 import br.com.bertolucci.mtgtools.deckbuilder.application.CollectionService;
-import br.com.bertolucci.mtgtools.deckbuilder.application.deck.GetCardDeckLegalityService;
-import br.com.bertolucci.mtgtools.deckbuilder.domain.card.CardDeck;
+import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Legality;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
 

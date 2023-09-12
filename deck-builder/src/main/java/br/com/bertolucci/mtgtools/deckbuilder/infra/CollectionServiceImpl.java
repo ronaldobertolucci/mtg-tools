@@ -4,6 +4,7 @@ import br.com.bertolucci.mtgtools.deckbuilder.application.*;
 import br.com.bertolucci.mtgtools.deckbuilder.application.card.ImportCardsService;
 import br.com.bertolucci.mtgtools.deckbuilder.application.set.FindSetService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.*;
+import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.symbol.Symbol;

@@ -3,7 +3,7 @@ package br.com.bertolucci.mtgtools.deckbuilder.application.deck;
 import br.com.bertolucci.mtgtools.deckbuilder.application.CollectionService;
 import br.com.bertolucci.mtgtools.deckbuilder.application.SaveService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
-import br.com.bertolucci.mtgtools.deckbuilder.domain.card.CardDeck;
+import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Legalities;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Legality;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;

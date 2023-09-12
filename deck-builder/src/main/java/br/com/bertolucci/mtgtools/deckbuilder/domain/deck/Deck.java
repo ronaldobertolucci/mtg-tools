@@ -1,6 +1,6 @@
 package br.com.bertolucci.mtgtools.deckbuilder.domain.deck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.domain.card.CardDeck;
+import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
