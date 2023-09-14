@@ -9,7 +9,7 @@ import java.util.List;
 public class CardDeckTableModel extends AbstractTableModel<CardDeck> {
 
     public CardDeckTableModel(List<CardDeck> cardDecks) {
-        super(new String[]{"Card", "Qtd", "Editar", "Excluir"}, cardDecks);
+        super(new String[]{"Card", "Qtd", "Excluir"}, cardDecks);
     }
 
     @Override
@@ -20,7 +20,6 @@ public class CardDeckTableModel extends AbstractTableModel<CardDeck> {
             case 1:
                 return list.get(rowIndex).getQuantity();
             case 2:
-            case 3:
                 return list.get(rowIndex);
             default:
                 return "Dados não encontrados";

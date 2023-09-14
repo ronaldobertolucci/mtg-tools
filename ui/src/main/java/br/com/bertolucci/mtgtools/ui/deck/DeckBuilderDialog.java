@@ -152,12 +152,12 @@ public class DeckBuilderDialog extends AbstractDialog {
                 super.mouseClicked(e);
                 CardDeck cardDeck;
                 switch (cardDeckTable.columnAtPoint(e.getPoint())) {
+//                    case 2:
+//                        cardDeck = (CardDeck) cardDeckTable.getModel().getValueAt(cardDeckTable.rowAtPoint(e.getPoint()), 2);
+//                        update( cardDeck);
+//                        break;
                     case 2:
                         cardDeck = (CardDeck) cardDeckTable.getModel().getValueAt(cardDeckTable.rowAtPoint(e.getPoint()), 2);
-                        update( cardDeck);
-                        break;
-                    case 3:
-                        cardDeck = (CardDeck) cardDeckTable.getModel().getValueAt(cardDeckTable.rowAtPoint(e.getPoint()), 3);
                         removeCardDeck(cardDeck);
                 }
             }
