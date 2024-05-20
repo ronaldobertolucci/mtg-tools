@@ -67,11 +67,11 @@ class InitSetsServiceTest {
     }
 
     private Set getSet(String name, String code, String type) {
-        return new Set(name, code, type, 100, false, "teste.com", null);
+        return new Set(name, code, type, 100, "teste.com", "2020-01-01");
     }
 
     private SetDto getSetDto(String name, String code, String type) {
-        return new SetDto(code, name, type, 100, false, "teste.com", null, null, "zen");
+        return new SetDto(code, name, type, 100, false, "teste.com", "2020-01-01", null, "zen");
     }
 
     private List<Set> getSetsWithoutToken() {

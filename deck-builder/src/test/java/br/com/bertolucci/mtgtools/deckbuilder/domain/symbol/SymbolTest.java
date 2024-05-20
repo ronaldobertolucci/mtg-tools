@@ -52,7 +52,7 @@ class SymbolTest {
 
     @Test
     void testSymbolHashCode() {
-        assertEquals(121490, symbolOne.hashCode());
+        assertEquals(121022, symbolOne.hashCode());
     }
 
     @Test

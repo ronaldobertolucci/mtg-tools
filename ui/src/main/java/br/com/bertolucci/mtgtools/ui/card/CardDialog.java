@@ -216,7 +216,7 @@ public class CardDialog extends AbstractDialog {
         card.setBorderColor(borderColor.name().toUpperCase());
         card.setRarity(rarity.name().toUpperCase());
         card.setCollectorNumber(cardCollectorNumberTextField.getText());
-        card.setDigital(cardDigitalCheckBox.isSelected());
+        card.setIsDigital(cardDigitalCheckBox.isSelected());
         card.setOracleText(cardOracleTextTextArea.getText());
         card.setPower(cardPowerTextField.getText());
         card.setToughness(cardToughnessTextField.getText());

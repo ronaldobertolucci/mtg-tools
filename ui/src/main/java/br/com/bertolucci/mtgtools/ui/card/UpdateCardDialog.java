@@ -58,7 +58,7 @@ public class UpdateCardDialog extends CardDialog {
         cardImageStatusComboBox.setSelectedItem(card.getImageStatus());
         cardBorderColorComboBox.setSelectedItem(card.getBorderColor());
         cardCollectorNumberTextField.setText(card.getCollectorNumber());
-        cardDigitalCheckBox.setSelected(card.isDigital());
+        cardDigitalCheckBox.setSelected(card.getIsDigital());
         cardOracleIdTextField.setText(card.getOracleId() != null ? card.getOracleId().toString() : null);
 
         cardPowerTextField.setText(card.getPower());

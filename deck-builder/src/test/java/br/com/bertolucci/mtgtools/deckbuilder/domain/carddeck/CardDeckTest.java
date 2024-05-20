@@ -18,7 +18,7 @@ class CardDeckTest {
     @BeforeEach
     void setUp() {
         card = new Card(
-                new Set("t", "t", "core", 100, true, "test.com", "2020-01-01"),
+                new Set("t", "t", "core", 100, "test.com", "2020-01-01"),
                 "en",
                 " test type",
                 "normal",
@@ -52,16 +52,13 @@ class CardDeckTest {
 
     @Test
     void testCardDeckHashCode() {
-        assertEquals(-1947980631, cardDeckOne.hashCode());
+        assertEquals(-2018589865, cardDeckOne.hashCode());
     }
 
     @Test
     void testCardDeckToString() {
-        assertEquals("CardDeck{" +
-                "card=test name" +
-                ", deck=test: padrão (standard)" +
-                ", quantity=1" +
-                '}', cardDeckOne.toString());
+        assertEquals("CardDeck(card=test name, deck=test: padrão (standard), quantity=1)",
+                cardDeckOne.toString());
     }
 
 }

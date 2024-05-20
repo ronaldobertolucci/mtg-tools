@@ -66,7 +66,7 @@ class VerifyCardCollectionServiceTest {
     }
 
     private Set getSet() {
-        return new Set("test", "ttt", "core", 3, false, "test.com", "2020-01-01");
+        return new Set("test", "ttt", "core", 3, "test.com", "2020-01-01");
     }
 
     private CardDto getCardDto(String name, String collectorNumber) {

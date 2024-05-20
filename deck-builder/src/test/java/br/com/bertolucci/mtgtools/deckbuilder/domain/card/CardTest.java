@@ -18,7 +18,7 @@ class CardTest {
 
     @BeforeEach
     void setUp() {
-        set = new Set("t", "t", "core", 100, true, "test.com", "2020-01-01");
+        set = new Set("t", "t", "core", 100, "test.com", "2020-01-01");
 
         cardOne = new Card(
                 set,
@@ -44,7 +44,7 @@ class CardTest {
         assertEquals(ImageStatus.MISSING, cardOne.getImageStatus());
         assertEquals("200", cardOne.getCollectorNumber());
         assertEquals("test name", cardOne.getName());
-        assertTrue(cardOne.isDigital());
+        assertTrue(cardOne.getIsDigital());
         assertEquals(Rarity.COMMON, cardOne.getRarity());
         assertEquals("test.com", cardOne.getImageUri());
         assertEquals(0.0, cardOne.getCmc());
@@ -60,7 +60,7 @@ class CardTest {
         assertEquals("200", card.getCollectorNumber());
         assertEquals(ImageStatus.MISSING, card.getImageStatus());
         assertEquals(Rarity.MYTHIC, card.getRarity());
-        assertTrue(card.isDigital());
+        assertTrue(card.getIsDigital());
         assertEquals(Lang.EN, card.getLang());
         assertNull(card.getOracleId());
         assertEquals("A flavor text", card.getFlavorText());
@@ -101,7 +101,7 @@ class CardTest {
 
     @Test
     void testCardHashCode() {
-        assertEquals(-478595351, cardOne.hashCode());
+        assertEquals(-1199010621, cardOne.hashCode());
     }
 
     @Test

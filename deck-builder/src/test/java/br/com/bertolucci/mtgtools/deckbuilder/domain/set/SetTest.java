@@ -4,10 +4,13 @@ import br.com.bertolucci.mtgtools.shared.set.SetDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +26,6 @@ class SetTest {
                 " tEsT cOdE",
                 "cOrE ",
                 100,
-                true,
                 "http://test.com.br",
                 "2020-01-01");
     }
@@ -35,7 +37,6 @@ class SetTest {
         assertEquals(SetType.CORE, setOne.getType());
         assertEquals(100, setOne.getTotalCards());
         assertEquals("http://test.com.br", setOne.getImageUri());
-        assertTrue(setOne.isDigital());
         assertEquals(LocalDate.parse("2020-01-01"), setOne.getReleasedAt());
     }
 
@@ -47,7 +48,6 @@ class SetTest {
         assertEquals("test code", set.getCode());
         assertEquals(SetType.CORE, set.getType());
         assertEquals(100, set.getTotalCards());
-        assertTrue(set.isDigital());
         assertEquals("test.com", set.getImageUri());
         assertEquals(LocalDate.parse("2020-01-01"), set.getReleasedAt());
     }
@@ -59,7 +59,6 @@ class SetTest {
                 " test code",
                 "core",
                 100,
-                true,
                 "http://test.com.br",
                 "2020-01-01");
 
@@ -71,7 +70,7 @@ class SetTest {
 
     @Test
     void testSetHashCode() {
-        assertEquals(-977166765, setOne.hashCode());
+        assertEquals(-1295068713, setOne.hashCode());
     }
 
     @Test
@@ -87,7 +86,6 @@ class SetTest {
                 " test code",
                 "core",
                 100,
-                true,
                 "http://test.com.br",
                 "2020-01-01"));
     }
@@ -106,7 +104,6 @@ class SetTest {
                 input,
                 "core",
                 100,
-                true,
                 "http://test.com.br",
                 "2020-01-01"));
     }
@@ -118,25 +115,6 @@ class SetTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, -1})
-    void throwsExceptionWhenSetTotalCardsIsLowerThanOneOnConstructor(int input) {
-        assertThrows(IllegalArgumentException.class, () -> new Set(
-                "test name",
-                " test code",
-                "core",
-                input,
-                true,
-                "http://test.com.br",
-                "2020-01-01"));
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {0, -1, Integer.MIN_VALUE})
-    void throwsExceptionWhenSetTotalCardsIsLowerThanOneOnSetter(int input) {
-        assertThrows(IllegalArgumentException.class, () -> setOne.setTotalCards(input));
-    }
-
-    @ParameterizedTest
     @NullAndEmptySource
     void throwsExceptionWhenSetTypeNotExistsOnConstructor(String input) {
         assertThrows(IllegalArgumentException.class, () -> new Set(
@@ -144,7 +122,6 @@ class SetTest {
                 " test code",
                 input,
                 100,
-                true,
                 "http://test.com.br",
                 "2020-01-01"));
     }
@@ -163,7 +140,6 @@ class SetTest {
                 "code",
                 "core",
                 100,
-                true,
                 input,
                 "2020-01-01"));
     }
@@ -175,10 +151,15 @@ class SetTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"10/01/2020", "2020/10/10"})
-    void testReleasedDateWhenSetReleasedAtIsNullEmptyOrNotValidOnSetter(String input) {
-        setOne.setReleasedAt(input);
-        assertNull(setOne.getReleasedAt());
+    @NullSource
+    void testReleasedDateWhenSetReleasedAtIsNullOnSetter(String input) {
+        assertThrows(NullPointerException.class, () -> setOne.setReleasedAt(LocalDate.parse(input)));
+    }
+
+    @ParameterizedTest
+    @EmptySource
+    void testReleasedDateWhenSetReleasedAtIsEmptyOnSetter(String input) {
+        assertThrows(DateTimeParseException.class, () -> setOne.setReleasedAt(LocalDate.parse(input)));
     }
 
 }

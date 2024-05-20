@@ -8,7 +8,7 @@ public class RulingValidator {
 
     public String validateComment(String comment) {
         if (NotNullOrEmptyValidator.isValid(comment)) {
-            return comment.trim();
+            return comment.trim().toLowerCase();
         }
 
         throw new IllegalArgumentException("O comentário da regra não pode ser nulo ou vazio");
@@ -16,7 +16,7 @@ public class RulingValidator {
 
     public String validateSource(String source) {
         if (NotNullOrEmptyValidator.isValid(source)) {
-            return source.trim();
+            return source.trim().toLowerCase();
         }
 
         throw new IllegalArgumentException("A fonte da regra não pode ser nula ou vazia");

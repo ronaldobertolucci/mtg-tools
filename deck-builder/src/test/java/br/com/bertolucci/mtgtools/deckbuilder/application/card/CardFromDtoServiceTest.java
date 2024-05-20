@@ -49,7 +49,7 @@ class CardFromDtoServiceTest {
     void testNullSetInDtoButNotNullInConstructor(String setCode) {
         Card card = new CardFromDtoService(collectionService, findSetService,
                 getCardDto(null, setCode, null, null, null, null),
-                new Set("test", "ttt", "core", 100, true, "test.com", "2020-01-01")).get();
+                new Set("test", "ttt", "core", 100, "test.com", "2020-01-01")).get();
 
         assertNotNull(card.getSet());
         assertEquals("test", card.getSet().getName());

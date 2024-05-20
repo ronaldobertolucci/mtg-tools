@@ -17,7 +17,7 @@ class PartTest {
     @BeforeEach
     void setUp() {
         card = new Card(
-                new Set("t", "t", "core", 100, true, "test.com", "2020-01-01"),
+                new Set("t", "t", "core", 100, "test.com", "2020-01-01"),
                 "en",
                 "test",
                 "normal",
@@ -60,7 +60,7 @@ class PartTest {
 
     @Test
     void testPartHashCode() {
-        assertEquals(173340535, partOne.hashCode());
+        assertEquals(-33332435, partOne.hashCode());
     }
 
     @Test

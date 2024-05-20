@@ -32,14 +32,6 @@ public class SetValidator {
         throw new IllegalArgumentException("O tipo do set não existe");
     }
 
-    public LocalDate validateReleasedAt(String releasedAt) {
-        try {
-            return LocalDate.parse(releasedAt);
-        } catch (Exception ignored) {
-            return null;
-        }
-    }
-
     public String validateImageUri(String imageUri) {
         if (NotNullOrEmptyValidator.isValid(imageUri)) {
             return imageUri.trim();

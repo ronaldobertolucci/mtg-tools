@@ -24,18 +24,18 @@ class RulingTest {
 
     @Test
     void testRulingConstructor() {
-        assertEquals("wTc", rulingOne.getSource());
+        assertEquals("wtc", rulingOne.getSource());
         assertEquals(LocalDate.parse("2020-10-10"), rulingOne.getPublishedAt());
-        assertEquals("a cOmmeNt", rulingOne.getComment());
+        assertEquals("a comment", rulingOne.getComment());
         assertNotNull(rulingOne.getCard());
     }
 
     @Test
     void testRulingSecondaryConstructor() {
         Ruling ruling = new Ruling(new RulingDto(" wTc", "2020-10-10", "a cOmmeNt "));
-        assertEquals("wTc", ruling.getSource());
+        assertEquals("wtc", ruling.getSource());
         assertEquals(LocalDate.parse("2020-10-10"), ruling.getPublishedAt());
-        assertEquals("a cOmmeNt", ruling.getComment());
+        assertEquals("a comment", ruling.getComment());
         assertNull(ruling.getCard());
     }
 
@@ -50,12 +50,12 @@ class RulingTest {
 
     @Test
     void testRulingHashCode() {
-        assertEquals(-1627142605, rulingOne.hashCode());
+        assertEquals(-1983366297, rulingOne.hashCode());
     }
 
     @Test
     void testRulingToString() {
-        assertEquals("a cOmmeNt", rulingOne.toString());
+        assertEquals("a comment", rulingOne.toString());
     }
 
     @ParameterizedTest

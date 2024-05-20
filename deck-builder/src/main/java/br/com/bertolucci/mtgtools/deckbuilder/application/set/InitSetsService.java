@@ -7,6 +7,7 @@ import br.com.bertolucci.mtgtools.downloader.DownloadService;
 import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.shared.set.SetDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class InitSetsService {
@@ -75,7 +76,7 @@ public class InitSetsService {
 
                 set.setTotalCards(setDto.totalCards());
                 set.setImageUri(setDto.imageUri());
-                set.setReleasedAt(setDto.releasedAt());
+                set.setReleasedAt(LocalDate.parse(setDto.releasedAt()));
                 set.setType(setDto.type());
                 collectionService.getUpdateService().update(set);
             }

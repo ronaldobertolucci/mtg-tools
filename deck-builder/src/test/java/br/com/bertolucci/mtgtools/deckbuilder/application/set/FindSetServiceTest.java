@@ -33,15 +33,15 @@ class FindSetServiceTest {
     @Test
     void testNoResultSet() {
         Mockito.when(collectionService.findSetByCode("ttt")).thenReturn(null);
-        Set set = new Set("test", "ttt", "core", 1, false, "test.com", null);
+        Set set = new Set("test", "ttt", "core", 1, "test.com", "2020-01-01");
         assertSame(set, findSetService.find(set));
     }
 
     @Test
     void testResultSet() {
         Mockito.when(collectionService.findSetByCode("ttt"))
-                .thenReturn(new Set("test", "ttt", "core", 1, false, "test.com", null));
-        Set set = new Set("test", "ttt", "core", 1, false, "test.com", null);
+                .thenReturn(new Set("test", "ttt", "core", 1, "test.com", "2020-01-01"));
+        Set set = new Set("test", "ttt", "core", 1, "test.com", "2020-01-01");
         assertNotSame(set, findSetService.find(set));
     }
 
@@ -54,15 +54,15 @@ class FindSetServiceTest {
     @Test
     void testNoResultSetWithSetCode() {
         Mockito.when(collectionService.findSetByCode("ttt")).thenReturn(null);
-        Set set = new Set("test", "ttt", "core", 1, false, "test.com", null);
+        Set set = new Set("test", "ttt", "core", 1, "test.com", "2020-01-01");
         assertNull(findSetService.find("ttt"));
     }
 
     @Test
     void testResultSetWithSetCode() {
         Mockito.when(collectionService.findSetByCode("ttt"))
-                .thenReturn(new Set("test", "ttt", "core", 1, false, "test.com", null));
-        Set set = new Set("test", "ttt", "core", 1, false, "test.com", null);
+                .thenReturn(new Set("test", "ttt", "core", 1, "test.com", "2020-01-01"));
+        Set set = new Set("test", "ttt", "core", 1, "test.com", "2020-01-01");
         assertNotSame(set, findSetService.find("ttt"));
     }
 

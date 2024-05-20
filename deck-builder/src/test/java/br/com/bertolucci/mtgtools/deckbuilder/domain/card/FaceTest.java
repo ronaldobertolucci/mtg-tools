@@ -18,7 +18,7 @@ class FaceTest {
     @BeforeEach
     void setUp() {
         card = new Card(
-                new Set("t", "t", "core", 100, true, "test.com", "2020-01-01"),
+                new Set("t", "t", "core", 100, "test.com", "2020-01-01"),
                 "en",
                 "test",
                 "normal",
@@ -67,7 +67,7 @@ class FaceTest {
 
     @Test
     void testFaceHashCode() {
-        assertEquals(-790022861, faceOne.hashCode());
+        assertEquals(1289653865, faceOne.hashCode());
     }
 
     @Test

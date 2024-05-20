@@ -33,7 +33,7 @@ class DeckTest {
 
     @Test
     void testDeckHashCode() {
-        assertEquals(134074546, deckOne.hashCode());
+        assertEquals(134074078, deckOne.hashCode());
     }
 
     @Test

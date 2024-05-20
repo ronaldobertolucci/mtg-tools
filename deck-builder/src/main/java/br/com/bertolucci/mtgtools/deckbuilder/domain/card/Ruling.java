@@ -2,12 +2,20 @@ package br.com.bertolucci.mtgtools.deckbuilder.domain.card;
 
 import br.com.bertolucci.mtgtools.shared.card.RulingDto;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @Table(name = "rulings")
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(of = {"source", "publishedAt", "comment"})
 public class Ruling {
 
     @Transient
@@ -24,9 +32,6 @@ public class Ruling {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String comment;
 
-    public Ruling() {
-    }
-
     public Ruling(Card card, String source, String publishedAt, String comment) {
         this.card = card;
         this.source = validator.validateSource(source);
@@ -40,63 +45,16 @@ public class Ruling {
         this.publishedAt = validator.validatePublishedAt(rulingDto.publishedAt());
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Card getCard() {
-        return card;
-    }
-
-    public void setCard(Card card) {
-        this.card = card;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
     public void setSource(String source) {
         this.source = validator.validateSource(source);
-    }
-
-    public LocalDate getPublishedAt() {
-        return publishedAt;
     }
 
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = validator.validatePublishedAt(publishedAt);
     }
 
-    public String getComment() {
-        return comment;
-    }
-
     public void setComment(String comment) {
         this.comment = validator.validateComment(comment);
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Ruling ruling = (Ruling) object;
-        return this.source.equalsIgnoreCase(ruling.getSource())
-                && this.publishedAt.equals(ruling.getPublishedAt())
-                && this.comment.equalsIgnoreCase(ruling.getComment());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = 17;
-        result = 31 * result + comment.hashCode();
-        result = 31 * result + source.hashCode();
-        result = 31 * result + publishedAt.hashCode();
-        return result;
     }
 
     @Override
