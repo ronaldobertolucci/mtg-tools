@@ -42,7 +42,6 @@ public class Set {
         this.name = validator.validateName(name);
         this.code = validator.validateCode(code);
         this.type = validator.validateType(type);
-        this.totalCards = validator.validateTotalCards(totalCards);
         this.isDigital = isDigital;
         this.imageUri = validator.validateImageUri(imageUri);
         this.releasedAt = validator.validateReleasedAt(releasedAt);
@@ -52,7 +51,6 @@ public class Set {
         this.name = validator.validateName(setDto.name());
         this.code = validator.validateCode(setDto.code());
         this.type = validator.validateType(setDto.type());
-        this.totalCards = validator.validateTotalCards(setDto.totalCards());
         this.isDigital = setDto.isDigital();
         this.imageUri = setDto.imageUri();
         this.releasedAt = validator.validateReleasedAt(setDto.releasedAt());
@@ -101,10 +99,6 @@ public class Set {
 
     public Integer getTotalCards() {
         return totalCards;
-    }
-
-    public void setTotalCards(Integer totalCards) {
-        this.totalCards = validator.validateTotalCards(totalCards);
     }
 
     public Boolean isDigital() {

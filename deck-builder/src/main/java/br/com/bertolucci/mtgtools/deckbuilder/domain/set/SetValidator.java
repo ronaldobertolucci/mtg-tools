@@ -32,14 +32,6 @@ public class SetValidator {
         throw new IllegalArgumentException("O tipo do set não existe");
     }
 
-    public Integer validateTotalCards(Integer totalCards) {
-        if (totalCards > 0) {
-            return totalCards;
-        }
-
-        throw new IllegalArgumentException("O set deve possuir ao menos um card");
-    }
-
     public LocalDate validateReleasedAt(String releasedAt) {
         try {
             return LocalDate.parse(releasedAt);
