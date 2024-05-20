@@ -8,6 +8,7 @@ import br.com.bertolucci.mtgtools.downloader.DownloadService;
 import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.shared.card.CardDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImportCardsService {
@@ -31,13 +32,16 @@ public class ImportCardsService {
     public void importBySet(String setCode) throws NoApiConnectionException {
         Set set = collectionService.findSetByCode(setCode);
         List<CardDto> cardDtos = download(set);
+        List<Card> cards = new ArrayList<>();
         cardDtos.forEach(cardDto -> {
             Card c = new CardFromDtoService(collectionService, findSetService, cardDto, set).get();
-            save(c);
+            cards.add(c);
         });
+
+        saveAll(cards);
     }
 
-    private void save(Card c) {
-        collectionService.getSaveService().save(c);
+    private void saveAll(List<Card> list) {
+        collectionService.getSaveService().saveAll(list);
     }
 }
