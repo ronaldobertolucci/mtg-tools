@@ -1,5 +1,6 @@
 package br.com.bertolucci.mtgtools.downloader;
 
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.shared.card.CardDto;
 import br.com.bertolucci.mtgtools.shared.card.RulingDto;
 import br.com.bertolucci.mtgtools.shared.set.SetDto;

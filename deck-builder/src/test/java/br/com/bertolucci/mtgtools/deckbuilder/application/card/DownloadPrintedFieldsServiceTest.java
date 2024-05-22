@@ -5,7 +5,7 @@ import br.com.bertolucci.mtgtools.deckbuilder.application.UpdateService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
 import br.com.bertolucci.mtgtools.downloader.DownloadService;
-import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.shared.card.CardDto;
 import br.com.bertolucci.mtgtools.shared.card.FaceDto;
 import org.junit.jupiter.api.BeforeEach;

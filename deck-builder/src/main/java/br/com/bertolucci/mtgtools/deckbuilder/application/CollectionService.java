@@ -5,7 +5,7 @@ import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.symbol.Symbol;
-import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package br.com.bertolucci.mtgtools.deckbuilder.application.symbol;
 import br.com.bertolucci.mtgtools.deckbuilder.application.CollectionService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.symbol.Symbol;
 import br.com.bertolucci.mtgtools.downloader.DownloadService;
-import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.shared.symbol.SymbolDto;
 
 import java.util.List;

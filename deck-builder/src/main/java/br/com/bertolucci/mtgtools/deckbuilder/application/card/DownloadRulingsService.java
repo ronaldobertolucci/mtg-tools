@@ -4,7 +4,7 @@ import br.com.bertolucci.mtgtools.deckbuilder.application.CollectionService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Ruling;
 import br.com.bertolucci.mtgtools.downloader.DownloadService;
-import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.shared.card.RulingDto;
 
 import java.util.List;

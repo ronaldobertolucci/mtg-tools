@@ -2,7 +2,7 @@ package br.com.bertolucci.mtgtools.ui;
 
 import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.infra.DeckBuilderServiceImpl;
-import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.ui.util.Task;
 import br.com.bertolucci.mtgtools.ui.util.SwingWorker;
 

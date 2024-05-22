@@ -2,6 +2,7 @@ package br.com.bertolucci.mtgtools.downloader;
 
 import br.com.bertolucci.mtgtools.downloader.adapter.ApiAdapter;
 import br.com.bertolucci.mtgtools.downloader.adapter.ScryfallAdapter;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.downloader.util.HttpConnectionUtil;
 import br.com.bertolucci.mtgtools.shared.card.CardDto;
 import br.com.bertolucci.mtgtools.shared.card.RulingDto;

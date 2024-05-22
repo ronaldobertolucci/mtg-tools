@@ -3,7 +3,7 @@ package br.com.bertolucci.mtgtools.ui.set;
 import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
-import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.ui.AbstractDialog;
 import br.com.bertolucci.mtgtools.ui.card.*;
 import br.com.bertolucci.mtgtools.ui.util.FontUtil;

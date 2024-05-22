@@ -1,6 +1,6 @@
 package br.com.bertolucci.mtgtools.downloader.adapter;
 
-import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.downloader.util.HttpConnectionUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

@@ -10,7 +10,7 @@ import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.symbol.Symbol;
 import br.com.bertolucci.mtgtools.deckbuilder.infra.util.JPAUtil;
 import br.com.bertolucci.mtgtools.downloader.DownloadService;
-import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.criteria.JoinType;
 import org.hibernate.Session;

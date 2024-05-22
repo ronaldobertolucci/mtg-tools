@@ -5,7 +5,7 @@ import br.com.bertolucci.mtgtools.deckbuilder.application.SaveService;
 import br.com.bertolucci.mtgtools.deckbuilder.application.UpdateService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.symbol.Symbol;
 import br.com.bertolucci.mtgtools.downloader.DownloadService;
-import br.com.bertolucci.mtgtools.downloader.NoApiConnectionException;
+import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.shared.symbol.SymbolDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +15,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class InitSymbolsServiceTest {
 
