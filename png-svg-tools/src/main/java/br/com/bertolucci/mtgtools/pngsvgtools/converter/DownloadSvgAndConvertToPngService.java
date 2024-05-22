@@ -1,5 +1,7 @@
-package br.com.bertolucci.mtgtools.pngsvgtools;
+package br.com.bertolucci.mtgtools.pngsvgtools.converter;
 
+import br.com.bertolucci.mtgtools.pngsvgtools.download.DownloadImageService;
+import br.com.bertolucci.mtgtools.pngsvgtools.exception.ImageDownloadException;
 import br.com.bertolucci.mtgtools.pngsvgtools.util.CheckAndDeleteFileUtil;
 import org.apache.batik.transcoder.TranscoderException;
 

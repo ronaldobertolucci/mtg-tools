@@ -1,4 +1,4 @@
-package br.com.bertolucci.mtgtools.pngsvgtools;
+package br.com.bertolucci.mtgtools.pngsvgtools.exception;
 
 public class ImageDownloadException extends Exception {
     public ImageDownloadException(String message) {

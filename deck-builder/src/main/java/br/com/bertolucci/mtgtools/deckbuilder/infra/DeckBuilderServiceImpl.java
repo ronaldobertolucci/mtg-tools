@@ -19,8 +19,8 @@ import br.com.bertolucci.mtgtools.deckbuilder.domain.symbol.Symbol;
 import br.com.bertolucci.mtgtools.downloader.DownloadService;
 import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.downloader.ScryfallDownloadService;
-import br.com.bertolucci.mtgtools.pngsvgtools.DownloadImageService;
-import br.com.bertolucci.mtgtools.pngsvgtools.DownloadImageServiceImpl;
+import br.com.bertolucci.mtgtools.pngsvgtools.download.DownloadImageService;
+import br.com.bertolucci.mtgtools.pngsvgtools.download.DownloadImageServiceImpl;
 
 import java.util.Comparator;
 import java.util.List;

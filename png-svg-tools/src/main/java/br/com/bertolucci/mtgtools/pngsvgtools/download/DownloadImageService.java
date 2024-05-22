@@ -1,6 +1,6 @@
-package br.com.bertolucci.mtgtools.pngsvgtools;
+package br.com.bertolucci.mtgtools.pngsvgtools.download;
 
-import java.awt.*;
+import br.com.bertolucci.mtgtools.pngsvgtools.exception.ImageDownloadException;
 
 public interface DownloadImageService {
 

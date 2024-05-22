@@ -1,4 +1,4 @@
-package br.com.bertolucci.mtgtools.pngsvgtools;
+package br.com.bertolucci.mtgtools.pngsvgtools.converter;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

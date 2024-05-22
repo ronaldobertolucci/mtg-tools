@@ -1,9 +1,9 @@
 package br.com.bertolucci.mtgtools.deckbuilder.application.set;
 
 import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
-import br.com.bertolucci.mtgtools.pngsvgtools.DownloadImageService;
-import br.com.bertolucci.mtgtools.pngsvgtools.DownloadSvgAndConvertToPngService;
-import br.com.bertolucci.mtgtools.pngsvgtools.ImageDownloadException;
+import br.com.bertolucci.mtgtools.pngsvgtools.download.DownloadImageService;
+import br.com.bertolucci.mtgtools.pngsvgtools.converter.DownloadSvgAndConvertToPngService;
+import br.com.bertolucci.mtgtools.pngsvgtools.exception.ImageDownloadException;
 
 import java.awt.*;
 import java.io.IOException;

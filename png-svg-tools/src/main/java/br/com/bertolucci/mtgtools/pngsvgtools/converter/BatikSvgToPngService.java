@@ -1,4 +1,4 @@
-package br.com.bertolucci.mtgtools.pngsvgtools;
+package br.com.bertolucci.mtgtools.pngsvgtools.converter;
 
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;

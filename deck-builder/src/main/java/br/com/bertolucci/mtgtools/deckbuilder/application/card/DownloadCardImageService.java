@@ -3,8 +3,8 @@ package br.com.bertolucci.mtgtools.deckbuilder.application.card;
 import br.com.bertolucci.mtgtools.deckbuilder.application.CollectionService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Face;
-import br.com.bertolucci.mtgtools.pngsvgtools.DownloadImageService;
-import br.com.bertolucci.mtgtools.pngsvgtools.ImageDownloadException;
+import br.com.bertolucci.mtgtools.pngsvgtools.download.DownloadImageService;
+import br.com.bertolucci.mtgtools.pngsvgtools.exception.ImageDownloadException;
 
 import java.io.IOException;
 import java.nio.file.Files;

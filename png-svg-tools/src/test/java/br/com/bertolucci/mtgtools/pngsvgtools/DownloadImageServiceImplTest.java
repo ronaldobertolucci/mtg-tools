@@ -1,5 +1,8 @@
 package br.com.bertolucci.mtgtools.pngsvgtools;
 
+import br.com.bertolucci.mtgtools.pngsvgtools.download.DownloadImageService;
+import br.com.bertolucci.mtgtools.pngsvgtools.download.DownloadImageServiceImpl;
+import br.com.bertolucci.mtgtools.pngsvgtools.exception.ImageDownloadException;
 import br.com.bertolucci.mtgtools.pngsvgtools.util.CheckAndDeleteFileUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

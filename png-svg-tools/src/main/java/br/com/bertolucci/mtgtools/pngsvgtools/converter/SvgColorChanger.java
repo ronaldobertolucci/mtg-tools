@@ -1,4 +1,4 @@
-package br.com.bertolucci.mtgtools.pngsvgtools;
+package br.com.bertolucci.mtgtools.pngsvgtools.converter;
 
 import br.com.bertolucci.mtgtools.pngsvgtools.util.HexCodeValidator;
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
