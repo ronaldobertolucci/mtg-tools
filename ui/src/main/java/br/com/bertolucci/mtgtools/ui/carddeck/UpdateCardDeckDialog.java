@@ -1,6 +1,6 @@
 package br.com.bertolucci.mtgtools.ui.carddeck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 
 import javax.swing.*;
@@ -55,7 +55,7 @@ public class UpdateCardDeckDialog extends CardDeckDialog {
                 throw new IllegalArgumentException("Quantidade inválida");
             }
 
-            deckBuilderService.updateCardDeck(cardDeck);
+            deckBuilderService.updateDeck(cardDeck.getDeck());
             dispose();
 
         } catch (IllegalArgumentException e) {
@@ -65,6 +65,9 @@ public class UpdateCardDeckDialog extends CardDeckDialog {
 
     protected void fill() {
         quantityTextField.setText(String.valueOf(cardDeck.getQuantity()));
+        if (cardDeck.getQuantity() > 4) {
+            relentlessCheckBox.setSelected(true);
+        }
     }
 
 }

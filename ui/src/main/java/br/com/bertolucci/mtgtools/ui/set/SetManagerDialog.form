@@ -40,57 +40,9 @@
                 <properties>
                   <font size="20"/>
                   <foreground color="-11842741"/>
-                  <text value="Cards salvos"/>
+                  <text value="Cards"/>
                 </properties>
               </component>
-            </children>
-          </grid>
-          <grid id="54fa0" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <opaque value="false"/>
-              <visible value="true"/>
-            </properties>
-            <border type="none"/>
-            <children>
-              <component id="e045b" class="javax.swing.JButton" binding="addCardButton">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="30" height="30"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <icon value="images/plus24x24_09BA7C.png"/>
-                  <iconTextGap value="5"/>
-                  <label value="Adicionar card"/>
-                  <text value="Adicionar card"/>
-                  <toolTipText value="Adicionar card ao Set"/>
-                  <visible value="true"/>
-                </properties>
-              </component>
-              <component id="f6804" class="javax.swing.JButton" binding="downloadCardsButton">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="30" height="30"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <horizontalTextPosition value="11"/>
-                  <icon value="images/download24x24_F59A2D.png"/>
-                  <iconTextGap value="5"/>
-                  <text value="Baixar cards"/>
-                  <toolTipText value="Baixar cards (em inglês) para o Set"/>
-                  <visible value="true"/>
-                </properties>
-              </component>
-              <hspacer id="b6394">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
             </children>
           </grid>
           <scrollpane id="98ba8">
@@ -112,6 +64,75 @@
               </component>
             </children>
           </scrollpane>
+          <grid id="4b714" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="b6cb" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="8ec10" class="javax.swing.JLabel" binding="lastUpdateLabel">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font style="0"/>
+                      <horizontalAlignment value="2"/>
+                      <horizontalTextPosition value="2"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="12a03" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <horizontalAlignment value="2"/>
+                      <horizontalTextPosition value="2"/>
+                      <text value="Última atualização de legalidades e imagens: "/>
+                    </properties>
+                  </component>
+                  <hspacer id="93580">
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                </children>
+              </grid>
+              <grid id="201b1" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="21aba" class="javax.swing.JButton" binding="updateButton">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Atualizar"/>
+                    </properties>
+                  </component>
+                  <hspacer id="414a7">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                </children>
+              </grid>
+            </children>
+          </grid>
         </children>
       </grid>
       <grid id="1f9bd" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -385,7 +406,7 @@
                         <properties>
                           <font size="20"/>
                           <foreground color="-11842741"/>
-                          <text value="Sets"/>
+                          <text value="Set"/>
                         </properties>
                       </component>
                     </children>

@@ -18,9 +18,9 @@ public class DeckTable extends AbstractTable {
 
     @Override
     protected void setColumnSizes() {
-        this.getColumnModel().getColumn(0).setMinWidth(200);
-        this.getColumnModel().getColumn(1).setMinWidth(200);
-        this.getColumnModel().getColumn(2).setMaxWidth(80);
+        this.getColumnModel().getColumn(0).setMinWidth(150);
+        this.getColumnModel().getColumn(1).setMinWidth(150);
+        this.getColumnModel().getColumn(2).setMinWidth(100);
         this.getColumnModel().getColumn(3).setMaxWidth(80);
         this.getColumnModel().getColumn(4).setMaxWidth(80);
     }

@@ -1,11 +1,14 @@
 package br.com.bertolucci.mtgtools.ui.deck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.application.deck.CheckLegalitiesService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
-import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Rarity;
+import br.com.bertolucci.mtgtools.deckbuilder.domain.card.CardRarity;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
-import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
+import br.com.bertolucci.mtgtools.shared.card.CardSearchParametersDto;
+import br.com.bertolucci.mtgtools.shared.util.SplitColorSqlOperator;
+import br.com.bertolucci.mtgtools.shared.util.SplitStringSqlOperator;
 import br.com.bertolucci.mtgtools.ui.AbstractDialog;
 import br.com.bertolucci.mtgtools.ui.card.CardDetailDialog;
 import br.com.bertolucci.mtgtools.ui.carddeck.CardDeckTable;
@@ -13,13 +16,16 @@ import br.com.bertolucci.mtgtools.ui.carddeck.CardDeckTableModel;
 import br.com.bertolucci.mtgtools.ui.carddeck.InsertCardDeckDialog;
 import br.com.bertolucci.mtgtools.ui.carddeck.UpdateCardDeckDialog;
 import br.com.bertolucci.mtgtools.ui.util.OptionDialogUtil;
+import com.google.common.io.Resources;
+import lombok.SneakyThrows;
 import org.apache.commons.text.WordUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
@@ -32,7 +38,6 @@ public class DeckBuilderDialog extends AbstractDialog {
     private JTextField toughnessTextField;
     private JTextField loyaltyTextField;
     private JTextField nameTextField;
-    private JComboBox setComboBox;
     private JTextField typeTextField;
     private JTextField oracleTextTextField;
     private JTable cardsTable;
@@ -44,45 +49,42 @@ public class DeckBuilderDialog extends AbstractDialog {
     private JLabel deckNameLabel;
     private JLabel formatLabel;
     private JLabel totalCardsLabel;
-    private JCheckBox blackCheckBox;
-    private JCheckBox greenCheckBox;
-    private JCheckBox redCheckBox;
-    private JCheckBox blueCheckBox;
-    private JCheckBox whiteCheckBox;
     private JTextField cmcTextField;
     private JComboBox rarityComboBox;
     private JLabel infoManaCostLabel;
-    private JCheckBox showAllCheckBox;
+    private JCheckBox highQualityCheckBox;
     private JLabel cardsFoundLabel;
+    private JLabel infoColorLabel;
+    private JLabel infoCmcLabel;
+    private JTextField colorTextField;
 
     private DeckBuilderService deckBuilderService;
-    private List<Set> sets;
     private Deck deck;
 
     public DeckBuilderDialog(DeckBuilderService deckBuilderService, Deck deck) {
         this.deckBuilderService = deckBuilderService;
-        this.sets = deckBuilderService.getSets();
         this.deck = deck;
 
-        prepareComboBoxes();
+        checkCards(deckBuilderService, deck);
+        prepareRarityComboBox();
         load();
         init(contentPane, "Construir deck");
     }
 
-    private void prepareComboBoxes() {
-        prepareSetComboBox();
-        prepareRarityComboBox();
-    }
-
-    private void prepareSetComboBox() {
-        setComboBox.addItem("Selecione um set");
-        sets.forEach(set -> setComboBox.addItem(set));
-        setComboBox.setPrototypeDisplayValue("");
+    private void checkCards(DeckBuilderService deckBuilderService, Deck deck) {
+        CheckLegalitiesService checkLegalitiesService = new CheckLegalitiesService(deck, deckBuilderService);
+        if (checkLegalitiesService.hasIllegal()) {
+            if (OptionDialogUtil.showDialog(
+                    this,
+                    "O deck possui cards não legais neste formato. Deseja removê-los?") == 0) {
+                checkLegalitiesService.removeIllegalCards();
+            }
+        }
     }
 
     private void prepareRarityComboBox() {
         rarityComboBox.addItem("Selecione uma raridade");
-        for (Rarity rarity : EnumSet.allOf(Rarity.class)) {
+        for (CardRarity rarity : EnumSet.allOf(CardRarity.class)) {
             rarityComboBox.addItem(rarity);
         }
         rarityComboBox.setPrototypeDisplayValue("");
@@ -90,13 +92,13 @@ public class DeckBuilderDialog extends AbstractDialog {
 
     private void load() {
         AtomicInteger totalCards = new AtomicInteger();
-        List<CardDeck> cards = deckBuilderService.getCardDeckByDeck(deck.getId());
+        List<CardDeck> cards = deck.getCards();
         cards.forEach(cardDeck -> {
             totalCards.addAndGet(cardDeck.getQuantity());
         });
 
         deckNameLabel.setText(WordUtils.capitalize(deck.getName()));
-        formatLabel.setText(WordUtils.capitalize(deck.getFormat().getTranslatedName()));
+        formatLabel.setText(WordUtils.capitalize(deck.getDeckFormat().getTranslatedName()));
         totalCardsLabel.setText(String.valueOf(totalCards));
         cards.sort(Comparator.comparing(cardDeck -> cardDeck.getCard().getName()));
         cardDeckTable.setModel(new CardDeckTableModel(cards));
@@ -152,57 +154,74 @@ public class DeckBuilderDialog extends AbstractDialog {
                 super.mouseClicked(e);
                 CardDeck cardDeck;
                 switch (cardDeckTable.columnAtPoint(e.getPoint())) {
-//                    case 2:
-//                        cardDeck = (CardDeck) cardDeckTable.getModel().getValueAt(cardDeckTable.rowAtPoint(e.getPoint()), 2);
-//                        update( cardDeck);
-//                        break;
                     case 2:
                         cardDeck = (CardDeck) cardDeckTable.getModel().getValueAt(cardDeckTable.rowAtPoint(e.getPoint()), 2);
+                        update( cardDeck);
+                        break;
+                    case 3:
+                        cardDeck = (CardDeck) cardDeckTable.getModel().getValueAt(cardDeckTable.rowAtPoint(e.getPoint()), 3);
                         removeCardDeck(cardDeck);
                 }
             }
         });
 
         infoTypeLabel.addMouseListener(new MouseAdapter() {
+            @SneakyThrows
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JOptionPane.showMessageDialog(contentPane, """
-                                O tipo deve ser buscado por palavras isoladas.
-                                                        
-                                Quando mais de uma palavra é usada, se houver resultado, os cards resultantes
-                                possuirão todas as palavras usadas na pesquisa.""",
-                        "Busca de tipos", JOptionPane.INFORMATION_MESSAGE);
+
+                URL url = Resources.getResource("texts/type_search.txt");
+                String text = Resources.toString(url, StandardCharsets.UTF_8);
+                JOptionPane.showMessageDialog(contentPane, text,"Busca de tipos", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        infoCmcLabel.addMouseListener(new MouseAdapter() {
+            @SneakyThrows
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                URL url = Resources.getResource("texts/cmc.txt");
+                String text = Resources.toString(url, StandardCharsets.UTF_8);
+                JOptionPane.showMessageDialog(contentPane, text,"Busca de tipos", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        infoColorLabel.addMouseListener(new MouseAdapter() {
+            @SneakyThrows
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                URL url = Resources.getResource("texts/color_search.txt");
+                String text = Resources.toString(url, StandardCharsets.UTF_8);
+                JOptionPane.showMessageDialog(contentPane, text,"Busca de cores", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
         infoOracleTextLabel.addMouseListener(new MouseAdapter() {
+            @SneakyThrows
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JOptionPane.showMessageDialog(contentPane, """
-                                O campo de palavras-chaves pode ser usado para buscar cards pelo seu texto de habilidade.
-                                                        
-                                Quando mais de uma palavra é usada, se houver resultado, os cards resultantes possuirão
-                                todas as palavras usadas na pesquisa. Usar 'flying haste', por exemplo, retorna todos os
-                                cards que possuem ambas habilidades.""",
-                        "Busca de palavras-chave", JOptionPane.INFORMATION_MESSAGE);
+                URL url = Resources.getResource("texts/oracle_search.txt");
+                String text = Resources.toString(url, StandardCharsets.UTF_8);
+                JOptionPane.showMessageDialog(contentPane, text,"Busca de texto", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
         infoManaCostLabel.addMouseListener(new MouseAdapter() {
+            @SneakyThrows
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JOptionPane.showMessageDialog(contentPane, """
-                                O filtro por custo de mana segue as mesmas regras já vistas anteriormente, ou seja, {1}{W}
-                                buscará cards com custo de mana igual a: 'uma mana sem cor e uma mana branca'.
-                                                
-                                Quando o custo de mana é especificado na busca, serão retornados cards com custo exatamente
-                                igual ao informado. Entretanto, é possível fornecer espaços 'coringa' usando o caractere _.
-                                Por exemplo, com o filtro {1}{R}{_} é possível retornar todos os cards com o custo de mana
-                                'uma mana sem cor, uma mana vermelha e qualquer outra mana válida ({U}, {B}, {W}, etc).""",
-                        "Busca de palavras-chave", JOptionPane.INFORMATION_MESSAGE);
+
+                URL url = Resources.getResource("texts/mana_cost_search.txt");
+                String text = Resources.toString(url, StandardCharsets.UTF_8);
+                JOptionPane.showMessageDialog(contentPane, text,"Busca de palavras-chave",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -223,20 +242,14 @@ public class DeckBuilderDialog extends AbstractDialog {
             return;
         }
 
-        deckBuilderService.removeCardDeck(cardDeck);
+        deckBuilderService.removeCardFromDeck(cardDeck);
         load();
     }
 
     private void clean() {
-        blackCheckBox.setSelected(false);
-        greenCheckBox.setSelected(false);
-        redCheckBox.setSelected(false);
-        blueCheckBox.setSelected(false);
-        whiteCheckBox.setSelected(false);
-        showAllCheckBox.setSelected(false);
+        highQualityCheckBox.setSelected(true);
 
         nameTextField.setText(null);
-        setComboBox.setSelectedIndex(0);
         rarityComboBox.setSelectedIndex(0);
         oracleTextTextField.setText(null);
         typeTextField.setText(null);
@@ -250,23 +263,20 @@ public class DeckBuilderDialog extends AbstractDialog {
     private void search() {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-        Set set = setComboBox.getSelectedIndex() != 0 ? (Set) setComboBox.getSelectedItem() : null;
-        Rarity rarity = rarityComboBox.getSelectedIndex() != 0 ? (Rarity) rarityComboBox.getSelectedItem() : null;
-
-        Double cmc = null;
-        try {
-            cmc = Double.valueOf(cmcTextField.getText());
-        } catch (NumberFormatException ignored) {
-        }
-
-        String format = showAllCheckBox.isSelected() ? null : deck.getFormat().name().toLowerCase();
-
-        List<Card> cards = deckBuilderService.findCards(
-                nameTextField.getText(), set != null ? set.getId() : null, getSplit(oracleTextTextField.getText()),
-                getSplit(typeTextField.getText()), manaCostTextField.getText(), powerTextField.getText(),
-                toughnessTextField.getText(), loyaltyTextField.getText(), blackCheckBox.isSelected(),
-                greenCheckBox.isSelected(), redCheckBox.isSelected(), blueCheckBox.isSelected(),
-                whiteCheckBox.isSelected(), cmc, rarity, format);
+        List<Card> cards = deckBuilderService.findCardsByParameter(new CardSearchParametersDto(
+                nameTextField.getText(),
+                SplitStringSqlOperator.split(typeTextField.getText()),
+                manaCostTextField.getText(),
+                powerTextField.getText(),
+                toughnessTextField.getText(),
+                loyaltyTextField.getText(),
+                SplitStringSqlOperator.split(oracleTextTextField.getText()),
+                SplitColorSqlOperator.split(colorTextField.getText()),
+                getCmc(),
+                getRarity(),
+                deck.getDeckFormat().name().toLowerCase(),
+                highQualityCheckBox.isSelected()
+        ), 500);
 
         cardsFoundLabel.setText(String.valueOf(cards.size()));
         cards.sort(Comparator.comparing(Card::getName));
@@ -274,20 +284,22 @@ public class DeckBuilderDialog extends AbstractDialog {
         setCursor(null);
     }
 
-    private List<String> getSplit(String str) {
-        List<String> split = new ArrayList<>();
+    private String getRarity() {
+        CardRarity rarity = rarityComboBox.getSelectedIndex() != 0
+                ? (CardRarity) rarityComboBox.getSelectedItem()
+                : null;
 
-        if (str.isEmpty()) {
-            return split;
+        return rarity == null ? null : rarity.name();
+    }
+
+    private Double getCmc() {
+        Double cmc = null;
+        try {
+            cmc = Double.valueOf(cmcTextField.getText());
+        } catch (NumberFormatException ignored) {
         }
 
-        String[] splited = str.trim().split(" ");
-
-        for (String s : splited) {
-            split.add(s.trim());
-        }
-
-        return split;
+        return cmc;
     }
 
     private void createUIComponents() {

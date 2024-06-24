@@ -1,6 +1,6 @@
 package br.com.bertolucci.mtgtools.ui.carddeck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 import br.com.bertolucci.mtgtools.ui.AbstractDialog;
 

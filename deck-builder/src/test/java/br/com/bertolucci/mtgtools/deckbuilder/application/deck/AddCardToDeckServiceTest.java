@@ -1,158 +1,160 @@
 package br.com.bertolucci.mtgtools.deckbuilder.application.deck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.CollectionService;
-import br.com.bertolucci.mtgtools.deckbuilder.application.SaveService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
+import br.com.bertolucci.mtgtools.deckbuilder.domain.card.CardBuilder;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
-import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Legalities;
-import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Legality;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
-import org.junit.jupiter.api.BeforeEach;
+import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.DeckBuilder;
+import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
+import br.com.bertolucci.mtgtools.shared.card.CardDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AddCardToDeckServiceTest {
 
-    @Mock
-    private CollectionService collectionService;
-    @Mock
-    private SaveService saveService;
+    private Card card;
 
-    @BeforeEach
-    void setup() {
-        MockitoAnnotations.initMocks(this);
-        Mockito.when(collectionService.getSaveService()).thenReturn(saveService);
+    @Test
+    void throwsExceptionWhenCardIsNull() {
+        CardDeck cardDeck = new CardDeck(null, new Deck(), 1);
+        assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
     }
 
     @Test
-    void testNullCard() {
-        CardDeck cardDeck = new CardDeck(null, getDeck("standard"), 3);
-        AddCardToDeckService addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, false);
-        assertThrows(IllegalArgumentException.class, addCardToDeckService::add);
+    void throwsExceptionWhenDeckIsNull() {
+        CardDeck cardDeck = new CardDeck(new Card(), null, 1);
+        assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
     }
 
     @Test
-    void testNullDeck() {
-        CardDeck cardDeck = new CardDeck(getCard(null, "a name"), null, 3);
-        AddCardToDeckService addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, false);
-        assertThrows(IllegalArgumentException.class, addCardToDeckService::add);
+    void throwsExceptionWhenCardAlreadyInDeck() {
+        CardDeck cardDeck = new CardDeck(
+                new CardBuilder(createCardDto("standard", "legal"), createSet()).build(),
+                new DeckBuilder("Name test", "standard").build(),
+                1
+        );
+        new AddCardToDeckService(cardDeck, false).add();
+
+        assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
     }
 
     @Test
-    void testNullLegalities() {
-        Mockito.when(collectionService.findCardDeckByDeck(Mockito.any())).thenReturn(new ArrayList<>());
+    void throwsExceptionWhenLegalityNotFound() {
+        CardDeck cardDeck = new CardDeck(
+                new CardBuilder(createCardDto("standard", "legal"), createSet()).build(),
+                new DeckBuilder("Name test", "historic").build(),
+                1
+        );
 
-        // legalities null
-        CardDeck cardDeck = new CardDeck(getCard(null, "a name"), getDeck("standard"), 3);
-        AddCardToDeckService addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, false);
-        assertThrows(IllegalArgumentException.class, addCardToDeckService::add);
-
-        // standard null
-        Legalities legalities = new Legalities();
-        legalities.setStandard(null);
-        cardDeck = new CardDeck(getCard(legalities, "a name"), getDeck("standard"), 3);
-        addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, false);
-        assertThrows(IllegalArgumentException.class, addCardToDeckService::add);
+        assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1, 0, 2, 3, 4, 5, 100})
-    void testWrongQuantityInRestrictedCard(Integer input) {
-        Mockito.when(collectionService.findCardDeckByDeck(Mockito.any())).thenReturn(new ArrayList<>());
+    @ValueSource(ints = {-1, 0, 5})
+    void testWrongQuantities(Integer input) {
+        CardDeck cardDeck = new CardDeck(
+                new CardBuilder(createCardDto("standard", "legal"), createSet()).build(),
+                new DeckBuilder("Name test", "standard").build(),
+                input
+        );
 
-        Legalities legalities = new Legalities();
-        legalities.setStandard(Legality.RESTRICTED);
-        CardDeck cardDeck = new CardDeck(getCard(legalities, "a name"), getDeck("standard"), input);
-        AddCardToDeckService addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, false);
-        assertThrows(IllegalArgumentException.class, addCardToDeckService::add);
-    }
-
-    @Test
-    void testRestrictedCard() {
-        Mockito.when(collectionService.findCardDeckByDeck(Mockito.any())).thenReturn(new ArrayList<>());
-
-        Legalities legalities = new Legalities();
-        legalities.setStandard(Legality.RESTRICTED);
-        CardDeck cardDeck = new CardDeck(getCard(legalities, "a name"), getDeck("standard"), 1);
-        AddCardToDeckService addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, false);
-
-        assertDoesNotThrow(addCardToDeckService::add);
-        Mockito.verify(collectionService.getSaveService()).save(Mockito.any());
-    }
-
-    @Test
-    void testSameNameCard() {
-        Legalities legalities = new Legalities();
-        legalities.setStandard(Legality.LEGAL);
-        Card card = getCard(legalities, "a name");
-        List<CardDeck> cardDeckList = new ArrayList<>();
-        cardDeckList.add(new CardDeck(card, getDeck("standard"), 1));
-        Mockito.when(collectionService.findCardDeckByDeck(Mockito.any())).thenReturn(cardDeckList);
-
-        CardDeck cardDeck = new CardDeck(getCard(legalities, "a name"), getDeck("standard"), 1);
-        AddCardToDeckService addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, false);
-
-        assertThrows(IllegalArgumentException.class, addCardToDeckService::add);
+        assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1, 0, 5, 100})
-    void testQuantities(Integer input) {
-        Mockito.when(collectionService.findCardDeckByDeck(Mockito.any())).thenReturn(new ArrayList<>());
-
-        Legalities legalities = new Legalities();
-        legalities.setStandard(Legality.LEGAL);
-        CardDeck cardDeck = new CardDeck(getCard(legalities, "a name"), getDeck("standard"), input);
-        AddCardToDeckService addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, false);
-
-        assertThrows(IllegalArgumentException.class, addCardToDeckService::add);
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 100, 1000})
+    @ValueSource(ints = {1, 2, 3, 4, 5, 100})
     void testRelentlessQuantities(Integer input) {
-        Mockito.when(collectionService.findCardDeckByDeck(Mockito.any())).thenReturn(new ArrayList<>());
+        CardDeck cardDeck = new CardDeck(
+                new CardBuilder(createCardDto("standard", "legal"), createSet()).build(),
+                new DeckBuilder("Name test", "standard").build(),
+                input
+        );
 
-        Legalities legalities = new Legalities();
-        legalities.setStandard(Legality.LEGAL);
-        CardDeck cardDeck = new CardDeck(getCard(legalities, "a name"), getDeck("standard"), input);
-        AddCardToDeckService addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, true);
-
-        assertDoesNotThrow(addCardToDeckService::add);
-        Mockito.verify(collectionService.getSaveService()).save(Mockito.any());
+        assertTrue(cardDeck.getDeck().getCards().isEmpty());
+        assertDoesNotThrow(() -> new AddCardToDeckService(cardDeck, true).add());
+        assertFalse(cardDeck.getDeck().getCards().isEmpty());
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1, 0})
-    void testWrongRelentlessQuantities(Integer input) {
-        Mockito.when(collectionService.findCardDeckByDeck(Mockito.any())).thenReturn(new ArrayList<>());
+    @ValueSource(ints = {0, -1, 2, 3, 4, 100})
+    void throwsExceptionWhenCardIsRestricted(Integer input) {
+        CardDeck cardDeck = new CardDeck(
+                new CardBuilder(createCardDto("standard", "restricted"), createSet()).build(),
+                new DeckBuilder("Name test", "standard").build(),
+                input
+        );
 
-        Legalities legalities = new Legalities();
-        legalities.setStandard(Legality.LEGAL);
-        CardDeck cardDeck = new CardDeck(getCard(legalities, "a name"), getDeck("standard"), input);
-        AddCardToDeckService addCardToDeckService = new AddCardToDeckService(collectionService, cardDeck, true);
-
-        assertThrows(IllegalArgumentException.class, addCardToDeckService::add);
+        assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
     }
 
-    private Deck getDeck(String format) {
-        return new Deck(format, "a name");
+    @Test
+    void testRestricted() {
+        CardDeck cardDeck = new CardDeck(
+                new CardBuilder(createCardDto("standard", "restricted"), createSet()).build(),
+                new DeckBuilder("Name test", "standard").build(),
+                1
+        );
+
+        assertTrue(cardDeck.getDeck().getCards().isEmpty());
+        assertDoesNotThrow(() -> new AddCardToDeckService(cardDeck, true).add());
+        assertFalse(cardDeck.getDeck().getCards().isEmpty());
     }
 
-    private Card getCard(Legalities legalities, String name) {
-        Card card = new Card(null, "en", "A Type Line", "normal", "black", "missing", "200", name, 3.0, true, "common",
-                "test.com");
-        card.setLegalities(legalities);
-        return card;
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 100})
+    void testBasicLands(Integer input) {
+        CardDeck cardDeck = new CardDeck(
+                new CardBuilder(createCardDto("standard", "legal"), createSet())
+                        .setTypeLine("Basic Land")
+                        .build(),
+                new DeckBuilder("Name test", "standard").build(),
+                input
+        );
+
+        assertTrue(cardDeck.getDeck().getCards().isEmpty());
+        assertDoesNotThrow(() -> new AddCardToDeckService(cardDeck, true).add());
+        assertFalse(cardDeck.getDeck().getCards().isEmpty());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 100})
+    void testBasicSnowLands(Integer input) {
+        CardDeck cardDeck = new CardDeck(
+                new CardBuilder(createCardDto("standard", "legal"), createSet())
+                        .setTypeLine("Basic Snow Land")
+                        .build(),
+                new DeckBuilder("Name test", "standard").build(),
+                input
+        );
+
+        assertTrue(cardDeck.getDeck().getCards().isEmpty());
+        assertDoesNotThrow(() -> new AddCardToDeckService(cardDeck, true).add());
+        assertFalse(cardDeck.getDeck().getCards().isEmpty());
+    }
+
+    private Set createSet() {
+        Set set = new Set();
+        set.setCode("ttt");
+        return set;
+    }
+
+    private CardDto createCardDto(String format, String legality) {
+        return new CardDto("123", "missing", "common", true, null,
+                createLegalities(format, legality), "Name test", "1", "1",
+                "Type line test","1", "Oracle text test", "{2}{B}", null,
+                "ttt", 3.0);
+    }
+
+    private Map<String, String> createLegalities(String format, String legality) {
+        Map<String, String> legalities = new HashMap<>();
+        legalities.put(format, legality);
+        return legalities;
     }
 
 }

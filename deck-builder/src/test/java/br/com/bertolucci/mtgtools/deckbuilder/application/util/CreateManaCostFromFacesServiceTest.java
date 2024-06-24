@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CreateManaCostFromFacesServiceTest {
+
     @Test
     void testCardWithManaCost() {
         Card card = new Card();
@@ -54,4 +55,5 @@ class CreateManaCostFromFacesServiceTest {
         face.setManaCost(manaCost);
         return face;
     }
+
 }

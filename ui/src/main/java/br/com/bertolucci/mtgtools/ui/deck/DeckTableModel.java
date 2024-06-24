@@ -18,7 +18,7 @@ public class DeckTableModel extends AbstractTableModel<Deck> {
             case 0:
                 return WordUtils.capitalize(list.get(rowIndex).getName());
             case 1:
-                return WordUtils.capitalize(list.get(rowIndex).getFormat().getTranslatedName());
+                return WordUtils.capitalize(list.get(rowIndex).getDeckFormat().getTranslatedName());
             case 2:
             case 3:
             case 4:

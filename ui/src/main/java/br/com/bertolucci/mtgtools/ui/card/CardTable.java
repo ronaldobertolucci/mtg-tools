@@ -23,8 +23,6 @@ public class CardTable extends AbstractTable {
         this.getColumnModel().getColumn(1).setMinWidth(230);
         this.getColumnModel().getColumn(2).setMinWidth(200);
         this.getColumnModel().getColumn(5).setMaxWidth(60);
-        this.getColumnModel().getColumn(6).setMaxWidth(60);
-        this.getColumnModel().getColumn(7).setMaxWidth(60);
     }
 
     @Override
@@ -36,12 +34,6 @@ public class CardTable extends AbstractTable {
         this.getColumnModel().getColumn(5).setCellRenderer(new ButtonCellRenderer(this.getClass()
                 .getClassLoader()
                 .getResource("images/eye16x16_555.png")));
-        this.getColumnModel().getColumn(6).setCellRenderer(new ButtonCellRenderer(this.getClass()
-                .getClassLoader()
-                .getResource("images/pencil16x16.png")));
-        this.getColumnModel().getColumn(7).setCellRenderer(new ButtonCellRenderer(this.getClass()
-                .getClassLoader()
-                .getResource("images/trash16x16.png")));
     }
 
 }

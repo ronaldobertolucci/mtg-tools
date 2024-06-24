@@ -1,0 +1,5 @@
+O campo de texto pode ser usado para buscar cards pelo seu texto de habilidade,
+ignorando diferenças de maiúsculas e minúsculas.
+
+Além disso, o texto pode ser buscado usando operadores && e ;.
+O operador && (E - AND) e o operador ; (OU - OR) permitem buscas mais dinâmicas e precisas.

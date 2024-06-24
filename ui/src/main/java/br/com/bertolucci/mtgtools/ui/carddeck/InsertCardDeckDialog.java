@@ -1,6 +1,6 @@
 package br.com.bertolucci.mtgtools.ui.carddeck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 
 import javax.swing.*;
@@ -40,6 +40,7 @@ public class InsertCardDeckDialog extends CardDeckDialog {
 
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             deckBuilderService.addCardToDeck(cardDeck, relentlessCheckBox.isSelected());
+            deckBuilderService.updateDeck(cardDeck.getDeck());
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Um erro ocorreu", JOptionPane.ERROR_MESSAGE);

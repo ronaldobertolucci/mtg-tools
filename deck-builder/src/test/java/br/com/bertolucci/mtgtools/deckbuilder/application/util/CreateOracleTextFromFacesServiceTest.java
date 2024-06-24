@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CreateOracleTextFromFacesServiceTest {
+
     @Test
     void testCardWithOracleText() {
         Card card = new Card();
@@ -52,4 +53,5 @@ class CreateOracleTextFromFacesServiceTest {
         face.setOracleText(oracleText);
         return face;
     }
+
 }

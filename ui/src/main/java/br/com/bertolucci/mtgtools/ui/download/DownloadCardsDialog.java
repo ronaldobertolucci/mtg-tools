@@ -1,32 +1,29 @@
 package br.com.bertolucci.mtgtools.ui.download;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
-import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.downloader.exception.NoApiConnectionException;
 import br.com.bertolucci.mtgtools.ui.util.Task;
 import br.com.bertolucci.mtgtools.ui.util.SwingWorker;
+import lombok.SneakyThrows;
 import org.apache.commons.text.WordUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.List;
 
 public class DownloadCardsDialog extends JDialog {
 
     private JPanel contentPane;
     private JLabel infoLabel;
-    private JLabel totalCardsLabel;
-    private JProgressBar progressBar;
 
-    private List<Set> sets;
-    private DeckBuilderService deckBuilderService;
     private DownloadTask task;
     private Timer timer;
+    private DeckBuilderService deckBuilderService;
+    private int counter = 1;
 
-    public DownloadCardsDialog(DeckBuilderService deckBuilderService) {
+    public DownloadCardsDialog(DeckBuilderService deckBuilderService) throws NoApiConnectionException, InterruptedException {
         this.deckBuilderService = deckBuilderService;
-        this.sets = deckBuilderService.getSets();
+
         setup();
 
         task.go();
@@ -50,32 +47,29 @@ public class DownloadCardsDialog extends JDialog {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         initListeners();
 
-        task = new DownloadTask(sets.size());
-        prepareProgressBar();
-    }
-
-    private void prepareProgressBar() {
-        progressBar.setMinimum(0);
-        progressBar.setMaximum(task.getLengthOfTask());
-        progressBar.setValue(0);
-        progressBar.setStringPainted(true);
+        task = new DownloadTask();
     }
 
     private void initListeners() {
 
-        timer = new Timer(10, new ActionListener() {
+        timer = new Timer(1500, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                progressBar.setValue(task.getCurrent());
-                infoLabel.setText(WordUtils.capitalize(task.getSetName()));
-                totalCardsLabel.setText(String.valueOf(task.getTotalCards()));
+                infoLabel.setText(WordUtils.capitalize(".".repeat(counter)));
+
+                counter++;
+                if (counter == 4) counter = 1;
 
                 if (task.isDone()) {
                     Toolkit.getDefaultToolkit().beep();
                     timer.stop();
                     setCursor(null);
 
-                    JOptionPane.showMessageDialog(contentPane, "Download concluído com sucesso",
-                            "Gerenciador de downloads", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                            contentPane,
+                            "Atualização concluída com sucesso",
+                            "Gerenciador de downloads",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
                     dispose();
                 }
             }
@@ -85,30 +79,30 @@ public class DownloadCardsDialog extends JDialog {
             @Override
             public void windowClosing(WindowEvent ev) {
                 if (timer.isRunning()) {
-                    JOptionPane.showMessageDialog(contentPane, "O download continuará em segundo plano",
-                            "Gerenciador de downloads", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                            contentPane,
+                            "A atualização continuará em segundo plano",
+                            "Gerenciador de downloads",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
                 }
             }
         });
     }
 
     class DownloadTask extends Task {
-        private Set actualSet;
-        private Integer totalCards;
 
-        public DownloadTask(int lengthOfTask) {
-            this.lengthOfTask = lengthOfTask;
+        public DownloadTask() {
         }
 
         @Override
         public void go() {
             final SwingWorker worker = new SwingWorker() {
+                @SneakyThrows
                 public Object construct() {
                     current = 0;
                     done = false;
                     canceled = false;
-                    actualSet = null;
-                    totalCards = 0;
                     return new ActualTask();
                 }
             };
@@ -118,45 +112,12 @@ public class DownloadCardsDialog extends JDialog {
         @Override
         public void stop() {
             canceled = true;
-            actualSet = null;
-            totalCards = 0;
-        }
-
-        public String getSetName() {
-            if (actualSet != null) {
-                return actualSet.getName();
-            }
-
-            return null;
-        }
-
-        public Integer getTotalCards() {
-            return totalCards;
         }
 
         class ActualTask {
-            ActualTask() {
-                for (Set set : sets) {
-                    actualSet = set;
-                    Integer dbTotalCards = deckBuilderService.getTotalCardsBySet(set.getId());
-
-                    try {
-                        deckBuilderService.importCardsBySet(set.getCode());
-                    } catch (NoApiConnectionException e) {
-                        JOptionPane.showMessageDialog(contentPane, "Erro ao conectar a API",
-                                "Gerenciador de downloads", JOptionPane.ERROR_MESSAGE);
-                        dispose();
-                        break;
-                    }
-
-                    totalCards += deckBuilderService.getTotalCardsBySet(set.getId()) - dbTotalCards;
-                    current++;
-
-                    if (current >= lengthOfTask) {
-                        done = true;
-                        current = lengthOfTask;
-                    }
-                }
+            ActualTask() throws NoApiConnectionException, InterruptedException {
+                deckBuilderService.updateLegalities();
+                done = true;
             }
         }
     }

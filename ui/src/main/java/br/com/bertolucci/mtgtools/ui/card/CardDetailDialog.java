@@ -1,16 +1,11 @@
 package br.com.bertolucci.mtgtools.ui.card;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
-import br.com.bertolucci.mtgtools.deckbuilder.application.card.DownloadCardImageService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
 import br.com.bertolucci.mtgtools.ui.AbstractDialog;
-import br.com.bertolucci.mtgtools.ui.util.SwingWorker;
-import br.com.bertolucci.mtgtools.ui.util.Task;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.nio.file.Files;
@@ -35,15 +30,15 @@ public class CardDetailDialog extends AbstractDialog {
     }
 
     private void download() {
-        DownloadCardImageService dcis = deckBuilderService.downloadCardImage(card);
+        deckBuilderService.downloadCardImage(card);
 
-        if (dcis.hasFaces()) {
-            prepareImage(imageLabel1, Paths.get(dcis.getCardPath().toString().replace(".png", "") + "_1.png"));
-            prepareImage(imageLabel2, Paths.get(dcis.getCardPath().toString().replace(".png", "") + "_2.png"));
+        if (!card.getFaces().isEmpty()) {
+            prepareImage(imageLabel1, Paths.get("app/cards/" + card.getSet().getId() + "/" + card.getId() + "_1.png"));
+            prepareImage(imageLabel2, Paths.get("app/cards/" + card.getSet().getId() + "/" + card.getId() + "_2.png"));
             return;
         }
 
-        prepareImage(imageLabel1, dcis.getCardPath());
+        prepareImage(imageLabel1, Paths.get("app/cards/" + card.getSet().getId() + "/" + card.getId() + ".png"));
     }
 
     private void prepareImage(JLabel label, Path imagePath) {

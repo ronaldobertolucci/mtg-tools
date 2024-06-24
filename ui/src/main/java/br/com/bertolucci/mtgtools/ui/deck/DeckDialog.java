@@ -1,8 +1,8 @@
 package br.com.bertolucci.mtgtools.ui.deck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
-import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Format;
+import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.DeckFormat;
 import br.com.bertolucci.mtgtools.ui.AbstractDialog;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class DeckDialog extends AbstractDialog {
     protected JButton addDeckButton;
     protected JButton cancelButton;
     protected JTextField nameTextField;
-    protected JComboBox<Format> formatComboBox;
+    protected JComboBox<DeckFormat> formatComboBox;
     protected Deck deck;
     protected DeckBuilderService deckBuilderService;
 
@@ -29,7 +29,7 @@ public class DeckDialog extends AbstractDialog {
     }
 
     private void prepareComboBox() {
-        for (Format format : EnumSet.allOf(Format.class)) {
+        for (DeckFormat format : EnumSet.allOf(DeckFormat.class)) {
             formatComboBox.addItem(format);
         }
     }
@@ -45,10 +45,10 @@ public class DeckDialog extends AbstractDialog {
     }
 
     protected Deck build() {
-        Format format = (Format) Objects.requireNonNull(formatComboBox.getSelectedItem());
+        DeckFormat format = (DeckFormat) Objects.requireNonNull(formatComboBox.getSelectedItem());
 
         deck.setName(nameTextField.getText());
-        deck.setFormat(format.name().toUpperCase());
+        deck.setDeckFormat(format);
         return deck;
     }
 }

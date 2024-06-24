@@ -1,22 +1,31 @@
 package br.com.bertolucci.mtgtools.deckbuilder.domain.symbol;
 
-import br.com.bertolucci.mtgtools.shared.symbol.SymbolDto;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLInsert;
 
 @Entity
-@Table(name = "symbols")
+@Table(name = "symbols", uniqueConstraints = { @UniqueConstraint(columnNames = { "symbol" }) })
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "symbol")
+@SQLInsert(sql = """
+    INSERT INTO symbols(description, image_uri, mana_value, represents_mana, symbol, id)
+        VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (symbol) DO UPDATE
+        SET
+            description=EXCLUDED.description,
+            image_uri=EXCLUDED.image_uri,
+            mana_value=EXCLUDED.mana_value,
+            represents_mana=EXCLUDED.represents_mana""")
+@SequenceGenerator(name = "SEQUENCE_SYMBOL", sequenceName = "symbols_id_seq", allocationSize = 1)
 public class Symbol {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_SYMBOL")
     private Integer id;
     @Column(unique = true, nullable = false)
     private String symbol;
@@ -28,37 +37,6 @@ public class Symbol {
     private Double manaValue;
     @Column(name = "image_uri")
     private String imageUri;
-    @Transient
-    private final SymbolValidator validator = new SymbolValidator();
-
-    public Symbol(String symbol, String description, Boolean representsMana, Double manaValue,
-                  String imageUri) {
-        this.symbol = validator.validateSymbol(symbol);
-        this.description = validator.validateDescription(description);
-        this.representsMana = validator.validateRepresentsMana(representsMana);
-        this.manaValue = manaValue;
-        this.imageUri = imageUri;
-    }
-
-    public Symbol(SymbolDto symbolDto) {
-        this.symbol = validator.validateSymbol(symbolDto.symbol());
-        this.description = validator.validateDescription(symbolDto.description());
-        this.representsMana = validator.validateRepresentsMana(symbolDto.representsMana());
-        this.manaValue = symbolDto.manaValue();
-        this.imageUri = symbolDto.imageUri();
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = validator.validateSymbol(symbol);
-    }
-
-    public void setDescription(String description) {
-        this.description = validator.validateDescription(description);
-    }
-
-    public void setRepresentsMana(Boolean representsMana) {
-        this.representsMana = validator.validateRepresentsMana(representsMana);
-    }
 
     @Override
     public String toString() {

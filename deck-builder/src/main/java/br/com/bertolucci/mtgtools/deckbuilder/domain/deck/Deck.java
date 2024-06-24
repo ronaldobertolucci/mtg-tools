@@ -11,37 +11,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "decks")
+@Table(name = "decks", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "name")
+@SequenceGenerator(name = "SEQUENCE_DECK", sequenceName = "decks_id_seq", allocationSize = 1)
 public class Deck {
 
-    @Transient
-    private final DeckValidator validator = new DeckValidator();
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE_DECK")
     private Integer id;
     @Enumerated(EnumType.STRING)
-    private Format format;
+    private DeckFormat deckFormat;
     @Column(nullable = false, unique = true)
     private String name;
-    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CardDeck> cards = new ArrayList<>();
-
-    public Deck(String format, String name) {
-        this.format = validator.validateFormat(format);
-        this.name = validator.validateName(name);
-    }
-
-    public void setFormat(String format) {
-        this.format = validator.validateFormat(format);
-    }
-
-    public void setName(String name) {
-        this.name = validator.validateName(name);
-    }
 
     public void addCard(CardDeck card) {
         this.cards.add(card);
@@ -50,6 +36,6 @@ public class Deck {
 
     @Override
     public String toString() {
-        return name + ": " + format;
+        return name + ": " + deckFormat;
     }
 }

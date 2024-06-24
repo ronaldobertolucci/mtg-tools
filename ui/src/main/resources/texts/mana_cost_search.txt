@@ -1,0 +1,25 @@
+Os símbolos de mana devem ser separados por chaves, como {U}, por exemplo.
+
+{U}: azul
+{W}: branco
+{B}: preto
+{G}: verde
+{R}: vermelho
+{C}: sem cor
+{P}: uma mana colorida ou dois pontos de vida
+{S}: mana de gelo (snow)
+
+Números seguem o mesma ideia, ou seja, {1}, {7}, ..., {20}.
+
+Símbolos divididos devem ser escritos separados por barra, como {R/G}. Eles devem seguir
+a ordem em que aparecem na imagem original. {G/R}, por exemplo, não produzirá resultado,
+visto que a ordem correta é {R/G}.
+
+Símbolos triplos, como {U/R/P}, {R/G/P} etc, são usados para representar símbolos duplos
+que envolvem mana colorida ou dois pontos de vida. Neste caso, o P é sempre colocado ao
+final.
+
+Quando o custo de mana é especificado na busca, serão retornados cards com custo exatamente
+igual ao informado. Entretanto, é possível fornecer espaços 'coringa' usando o caractere _.
+Por exemplo, com o filtro {1}{R}{_} é possível retornar todos os cards com o custo de mana
+'uma mana sem cor, uma mana vermelha e qualquer outra mana válida ({U}, {B}, {W}, etc).

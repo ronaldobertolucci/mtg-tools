@@ -1,0 +1,10 @@
+A busca por cores usa as letras que representam cada mana.
+
+U: azul
+W: branco
+B: preto
+G: verde
+R: vermelho
+
+Além disso, as cores podem ser encontradas usando operadores && e ;.
+O operador && (E - AND) e o operador ; (OU - OR) permitem buscas mais dinâmicas e precisas.

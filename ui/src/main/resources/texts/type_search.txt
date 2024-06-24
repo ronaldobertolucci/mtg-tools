@@ -1,0 +1,6 @@
+A busca por tipo considera tudo que é digitado, ignorando diferenças de maiúsculas
+e minúsculas.
+
+Além disso, o tipo pode ser buscado usando operadores && e ;.
+O operador && (E - AND) e o operador ; (OU - OR) permitem buscas mais dinâmicas e precisas.
+

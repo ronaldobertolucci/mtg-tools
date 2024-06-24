@@ -1,0 +1,4 @@
+O CMC (do inglês Converted Mana Cost) é a soma dos custos de mana, desconsiderando suas
+cores.
+
+Um card {2}{W}{W}, por exemplo, tem cmc igual a 4.

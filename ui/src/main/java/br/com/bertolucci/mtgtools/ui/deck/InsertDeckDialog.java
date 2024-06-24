@@ -1,6 +1,6 @@
 package br.com.bertolucci.mtgtools.ui.deck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
 
 import javax.swing.*;

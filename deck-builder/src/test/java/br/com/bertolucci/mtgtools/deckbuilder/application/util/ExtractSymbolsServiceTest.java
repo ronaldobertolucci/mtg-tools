@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExtractSymbolsServiceTest {
+
     @ParameterizedTest
     @NullAndEmptySource
     void testNullOrEmptyManaCost(String manaCost) {
@@ -91,4 +92,5 @@ class ExtractSymbolsServiceTest {
                 Arguments.of(" {2/U} // {U}", out)
         );
     }
+
 }

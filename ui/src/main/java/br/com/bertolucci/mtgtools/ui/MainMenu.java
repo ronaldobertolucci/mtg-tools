@@ -1,13 +1,11 @@
 package br.com.bertolucci.mtgtools.ui;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.ui.deck.DeckListDialog;
-import br.com.bertolucci.mtgtools.ui.download.DownloadCardsDialog;
 import br.com.bertolucci.mtgtools.ui.set.SetListDialog;
 import br.com.bertolucci.mtgtools.ui.set.SetManagerDialog;
 import br.com.bertolucci.mtgtools.ui.symbol.SymbolListDialog;
 import br.com.bertolucci.mtgtools.ui.util.MenuBuilder;
-import br.com.bertolucci.mtgtools.ui.util.OptionDialogUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,26 +26,12 @@ public class MainMenu {
         this.frame.setJMenuBar(menuBuilder.build());
     }
 
-    private void createDeckBuilderMenu(MenuBuilder menuBuilder) {
-        menuBuilder.addMenu("Construtor de decks");
-        menuBuilder.addMenuItem(2, "Meus decks", (actionEvent) -> {
-            new DeckListDialog(deckBuilderService);
-        });
-    }
-
     private void createCollectionMenu(MenuBuilder menuBuilder) {
         menuBuilder.addMenu("Coleção");
         menuBuilder.addMenuItem(1, "Meus Cards", (actionEvent) -> {
             frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             new SetManagerDialog(deckBuilderService);
             frame.setCursor(null);
-        });
-        menuBuilder.addMenuItem(1, "Buscar Cards na API", (actionEvent) -> {
-            frame.getContentPane().setVisible(false);
-            if (OptionDialogUtil.showDialog(frame, "Deseja procurar cards na API") == 0) {
-                new DownloadCardsDialog(deckBuilderService);
-            }
-            frame.getContentPane().setVisible(true);
         });
         menuBuilder.addSeparator(1);
         menuBuilder.addMenuItem(1, "Sets", (actionEvent) -> {
@@ -61,5 +45,12 @@ public class MainMenu {
     private void createFileMenu(MenuBuilder menuBuilder) {
         menuBuilder.addMenu("Arquivo");
         menuBuilder.addMenuItem(0, "Sair", (actionEvent) -> frame.dispose());
+    }
+
+    private void createDeckBuilderMenu(MenuBuilder menuBuilder) {
+        menuBuilder.addMenu("Construtor de decks");
+        menuBuilder.addMenuItem(2, "Meus decks", (actionEvent) -> {
+            new DeckListDialog(deckBuilderService);
+        });
     }
 }

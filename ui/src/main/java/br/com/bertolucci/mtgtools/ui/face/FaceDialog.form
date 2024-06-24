@@ -1,61 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="br.com.bertolucci.mtgtools.ui.face.FaceDialog">
-  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="20" left="20" bottom="20" right="20"/>
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="30" left="30" bottom="50" right="30"/>
     <constraints>
       <xy x="48" y="54" width="550" height="625"/>
     </constraints>
     <properties>
-      <maximumSize width="550" height="500"/>
-      <minimumSize width="550" height="500"/>
-      <preferredSize width="550" height="500"/>
+      <maximumSize width="500" height="470"/>
+      <minimumSize width="500" height="470"/>
+      <preferredSize width="500" height="470"/>
     </properties>
     <border type="none"/>
     <children>
-      <grid id="94766" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <hspacer id="98af6">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </hspacer>
-          <grid id="9538f" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="true" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="e7465" class="javax.swing.JButton" binding="addFaceButton">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <icon value="images/plus16x16_09BA7C.png"/>
-                  <text value="Adicionar"/>
-                </properties>
-              </component>
-              <component id="5723f" class="javax.swing.JButton" binding="cancelButton">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <icon value="images/cancel16x16_FF3838.png"/>
-                  <text value="Cancelar"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-        </children>
-      </grid>
-      <grid id="e3588" layout-manager="GridLayoutManager" row-count="11" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="e3588" layout-manager="GridLayoutManager" row-count="8" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -103,7 +60,9 @@
                     <preferred-size width="320" height="25"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                </properties>
               </component>
             </children>
           </grid>
@@ -129,7 +88,9 @@
                     <preferred-size width="320" height="25"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                </properties>
               </component>
             </children>
           </grid>
@@ -155,7 +116,9 @@
                     <preferred-size width="320" height="25"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                </properties>
               </component>
             </children>
           </grid>
@@ -181,7 +144,9 @@
                     <preferred-size width="320" height="25"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                </properties>
               </component>
             </children>
           </grid>
@@ -207,7 +172,9 @@
                     <preferred-size width="320" height="25"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                </properties>
               </component>
             </children>
           </grid>
@@ -233,40 +200,16 @@
                     <preferred-size width="320" height="25"/>
                   </grid>
                 </constraints>
-                <properties/>
-              </component>
-            </children>
-          </grid>
-          <grid id="90da6" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="94508" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
                 <properties>
-                  <text value="ID Oracle:"/>
+                  <horizontalAlignment value="4"/>
                 </properties>
-              </component>
-              <component id="fedf8" class="javax.swing.JTextField" binding="faceOracleIdTextField">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="320" height="25"/>
-                  </grid>
-                </constraints>
-                <properties/>
               </component>
             </children>
           </grid>
           <grid id="5a30c" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -292,84 +235,17 @@
                       <lineWrap value="true"/>
                       <maximumSize width="-1" height="50"/>
                       <minimumSize width="-1" height="50"/>
-                      <preferredSize width="-1" height="50"/>
+                      <preferredSize width="-1" height="136"/>
+                      <rows value="6"/>
                       <wrapStyleWord value="true"/>
                     </properties>
                   </component>
                 </children>
               </scrollpane>
-            </children>
-          </grid>
-          <grid id="e2f1b" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="c4ff8" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Texto sem função no jogo (flavor text):"/>
-                </properties>
-              </component>
-              <scrollpane id="afb0">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="12812" class="javax.swing.JTextArea" binding="faceFlavorTextTextArea">
-                    <constraints/>
-                    <properties>
-                      <lineWrap value="true"/>
-                      <maximumSize width="-1" height="50"/>
-                      <minimumSize width="-1" height="50"/>
-                      <preferredSize width="-1" height="50"/>
-                      <wrapStyleWord value="true"/>
-                    </properties>
-                  </component>
-                </children>
-              </scrollpane>
-            </children>
-          </grid>
-          <grid id="4febf" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="7b179" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Caminho da imagem:"/>
-                </properties>
-              </component>
-              <component id="743fe" class="javax.swing.JTextField" binding="faceImagePathTextField">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="4" anchor="4" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="320" height="25"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
             </children>
           </grid>
         </children>
       </grid>
-      <vspacer id="6dd76">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
     </children>
   </grid>
 </form>

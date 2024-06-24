@@ -1,42 +1,30 @@
 package br.com.bertolucci.mtgtools.ui.set;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.set.Set;
 import br.com.bertolucci.mtgtools.ui.AbstractListDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SetListDialog extends AbstractListDialog<Set> {
 
-    private List<Set> sets;
+    private List<Set> sets = new ArrayList<>();
 
     public SetListDialog(DeckBuilderService deckBuilderService) {
-        super(new SetTableModel(deckBuilderService.getSets()), deckBuilderService);
-        this.sets = deckBuilderService.getSets();
+        super(new SetTableModel(deckBuilderService.getSets()));
+
+        this.sets.addAll(deckBuilderService.getSets());
+        this.sets.sort((s1, s2) -> s1.getReleasedAt().isBefore(s2.getReleasedAt()) ? 1 : -1);
 
         load();
-        addButton.setVisible(false);
         init(contentPane, "Sets");
     }
 
-    @Override
-    protected void update(Set set) {
-    }
-
-    @Override
-    protected void insert() {
-    }
-
-    @Override
-    protected void remove(Set set) {
-    }
-
-    @Override
     protected void load() {
         table.setModel(new SetTableModel(sets));
     }
 
-    @Override
     protected void createUIComponents() {
         table = new SetTable();
     }

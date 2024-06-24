@@ -9,7 +9,7 @@ import java.util.List;
 public class CardTableModel extends AbstractTableModel<Card> {
 
     public CardTableModel(List<Card> cards) {
-        super(new String[]{"Nome", "Tipo", "Custo de Mana", "Raridade", "N° Coleção", "Ver", "Editar", "Excluir"}, cards);
+        super(new String[]{"Nome", "Tipo", "Custo de Mana", "Raridade", "N° Coleção", "Ver"}, cards);
     }
 
     @Override
@@ -22,12 +22,10 @@ public class CardTableModel extends AbstractTableModel<Card> {
             case 2:
                 return list.get(rowIndex).getManaCost();
             case 3:
-                return WordUtils.capitalize(list.get(rowIndex).getRarity().getTranslatedName());
+                return WordUtils.capitalize(list.get(rowIndex).getCardRarity().getTranslatedName());
             case 4:
                 return list.get(rowIndex).getCollectorNumber();
             case 5:
-            case 6:
-            case 7:
                 return list.get(rowIndex);
             default:
                 return "Dados não encontrados";
