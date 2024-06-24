@@ -1,6 +1,6 @@
 package br.com.bertolucci.mtgtools.ui.deck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
 import br.com.bertolucci.mtgtools.ui.util.OptionDialogUtil;
 import org.apache.commons.text.WordUtils;
@@ -48,14 +48,6 @@ public class UpdateDeckDialog extends DeckDialog {
     protected void updateDeck() {
         try {
             Deck d = build();
-            setVisible(false);
-
-            if (OptionDialogUtil.showDialog(this, "Alterar o formato do deck pode remover cards da lista atual, cuja " +
-                    "legalidade não é permitida no novo formato. Tem certeza que deseja continuar?") != 0) {
-                setVisible(true);
-                return;
-            }
-
             deckBuilderService.updateDeck(d);
             dispose();
             
@@ -66,7 +58,7 @@ public class UpdateDeckDialog extends DeckDialog {
 
     protected void fill(Deck deck) {
         nameTextField.setText(WordUtils.capitalize(deck.getName()));
-        formatComboBox.setSelectedItem(deck.getFormat());
+        formatComboBox.setSelectedItem(deck.getDeckFormat());
     }
 
 }

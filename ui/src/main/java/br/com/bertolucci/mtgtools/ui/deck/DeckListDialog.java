@@ -1,28 +1,58 @@
 package br.com.bertolucci.mtgtools.ui.deck;
 
-import br.com.bertolucci.mtgtools.deckbuilder.application.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.deck.Deck;
-import br.com.bertolucci.mtgtools.ui.AbstractListDialog;
+import br.com.bertolucci.mtgtools.ui.AbstractDialog;
+import br.com.bertolucci.mtgtools.ui.AbstractTableModel;
 import br.com.bertolucci.mtgtools.ui.util.OptionDialogUtil;
 import org.apache.commons.text.WordUtils;
 
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Comparator;
 import java.util.List;
 
-public class DeckListDialog extends AbstractListDialog<Deck> {
+public class DeckListDialog extends AbstractDialog {
+
+    protected JPanel contentPane;
+    protected JTable table;
+    protected JButton addButton;
+    protected AbstractTableModel<Deck> tableModel;
+    private DeckBuilderService deckBuilderService;
 
     public DeckListDialog(DeckBuilderService deckBuilderService) {
-        super(new DeckTableModel(deckBuilderService.getDecks()), deckBuilderService);
+        this.tableModel = new DeckTableModel(deckBuilderService.getDecks());
+        this.deckBuilderService = deckBuilderService;
 
         load();
         init(contentPane, "Meus decks");
     }
 
-    @Override
     protected void initListeners() {
-        super.initListeners();
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                int tableLength = table.getColumnCount();
+                Deck t;
+                if (table.columnAtPoint(e.getPoint()) == (tableLength - 2)) {
+                    t = (Deck) table.getModel().getValueAt(table.rowAtPoint(e.getPoint()), (tableLength - 2));
+                    update(t);
+                }
+                if (table.columnAtPoint(e.getPoint()) == (tableLength - 1)) {
+                    t = (Deck) table.getModel().getValueAt(table.rowAtPoint(e.getPoint()), (tableLength - 1));
+                    remove(t);
+                }
+            }
+        });
+        addButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                insert();
+            }
+        });
 
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -43,19 +73,21 @@ public class DeckListDialog extends AbstractListDialog<Deck> {
         load();
     }
 
-    @Override
     protected void update(Deck deck) {
+        if (OptionDialogUtil.showDialog(this, "Alterar o formato do deck pode remover cards da lista atual, cuja " +
+                "legalidade não é permitida no novo formato. Tem certeza que deseja continuar?") != 0) {
+            return;
+        }
+
         new UpdateDeckDialog(deckBuilderService, deck);
         load();
     }
 
-    @Override
     protected void insert() {
         new InsertDeckDialog(deckBuilderService);
         load();
     }
 
-    @Override
     protected void remove(Deck deck) {
         if (OptionDialogUtil.showDialog(this,
                 "Deseja excluir o deck " + WordUtils.capitalize(deck.getName()) + "?") != 0) {
@@ -66,7 +98,6 @@ public class DeckListDialog extends AbstractListDialog<Deck> {
         load();
     }
 
-    @Override
     protected void load() {
         List<Deck> decks;
         decks = deckBuilderService.getDecks();
@@ -74,7 +105,6 @@ public class DeckListDialog extends AbstractListDialog<Deck> {
         table.setModel(new DeckTableModel(decks));
     }
 
-    @Override
     protected void createUIComponents() {
         table = new DeckTable();
     }
