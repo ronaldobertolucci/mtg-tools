@@ -16,8 +16,10 @@
 
 ## Requisitos básicos para utilização:
 1. Java 17
-2. Um banco de dados PostgreSQL (localhost:5432 postgres/postgres)
-3. IntelliJ 2023.2 (Community Edition)
+2. Banco de dados PostgreSQL 16 (localhost:5432 postgres/postgres)
+3. IntelliJ 2023.2 ou maior (Community Edition)
+4. Plugin do Lombok instalado e ativado no IntelliJ [(tutorial aqui)](https://projectlombok.org/setup/intellij)
+5. Processamento de anotações ativado no IntelliJ (Settings > Build...> Compiler > Annotation Processors)
 
 ## Próximos passos
 1. Implementar o sideboard dos decks.
