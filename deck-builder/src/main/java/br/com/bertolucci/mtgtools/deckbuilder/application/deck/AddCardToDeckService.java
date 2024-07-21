@@ -32,8 +32,9 @@ public class AddCardToDeckService {
                     .findFirst().orElseThrow()
                     .getLegality();
 
-            if (cardDeck.getQuantity() > 0 && (cardDeck.getCard().getTypeLine().contains("Basic Land")
-                    || cardDeck.getCard().getTypeLine().contains("Basic Snow Land"))) {
+            if (cardDeck.getQuantity() > 0
+                    && (cardDeck.getCard().getTypeLine().toLowerCase().contains("Basic Land".toLowerCase())
+                    || cardDeck.getCard().getTypeLine().toLowerCase().contains("Basic Snow Land".toLowerCase()))) {
                 cardDeck.getDeck().addCard(cardDeck);
                 return;
             }

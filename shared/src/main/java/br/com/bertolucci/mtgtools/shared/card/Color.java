@@ -5,5 +5,6 @@ public enum Color {
     W,
     U,
     R,
-    G
+    G,
+    C
 }

@@ -26,14 +26,7 @@ public class ExtractSymbolsService {
     }
 
     private static List<String> getSymbolList(String manaCost) {
-        List<String> symbols = new ArrayList<>();
-
-        String[] splited = manaCost.trim().split("}");
-        for (String s : splited) {
-            symbols.add("{" + s.replaceAll("[^½∞A-Za-z0-9]", "") + "}");
-        }
-
-        return symbols;
+        return GetSymbolList.get(manaCost);
     }
 
 }

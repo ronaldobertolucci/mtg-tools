@@ -1,6 +1,7 @@
 package br.com.bertolucci.mtgtools.ui.deck;
 
 import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.application.deck.CalculateManaService;
 import br.com.bertolucci.mtgtools.deckbuilder.application.deck.CheckLegalitiesService;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.Card;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.card.CardRarity;
@@ -56,6 +57,7 @@ public class DeckBuilderDialog extends AbstractDialog {
     private JTextField colorTextField;
     private JTable sideboardCardsTable;
     private JLabel totalSideboardCardsLabel;
+    private JButton manaCalculatorButton;
 
     private DeckBuilderService deckBuilderService;
     private Deck deck;
@@ -251,6 +253,20 @@ public class DeckBuilderDialog extends AbstractDialog {
                 String text = Resources.toString(url, StandardCharsets.UTF_8);
                 JOptionPane.showMessageDialog(contentPane, text,"Busca de palavras-chave",
                         JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        manaCalculatorButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                CalculateManaService calculateManaService = new CalculateManaService(0.92, deck);
+
+                String text = "Número de terrenos sugeridos: " + calculateManaService.getSuggestedManaCards() + "\n"
+                        + "Valor de mana médio: " + calculateManaService.getAvgCmc() + "\n"
+                        + "Distribuição: " + calculateManaService.getResults();
+                JOptionPane.showMessageDialog(contentPane, text,"Proporção de mana",
+                        JOptionPane.INFORMATION_MESSAGE);;
             }
         });
 

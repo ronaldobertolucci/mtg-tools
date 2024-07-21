@@ -22,9 +22,9 @@
 5. Processamento de anotações ativado no IntelliJ (Settings > Build...> Compiler > Annotation Processors)
 
 ## Próximos passos
-1. Implementar o sideboard dos decks.
-2. Implementar importação e exportação de decks.
-3. Implementar recomendação de terrenos.
+1. Implementar importação e exportação de decks.
+2. Trabalhar com as imagens dos cards.
+3. Refatorar ui para trabalhar com DTOs no lugar das entidades
 
 ## Nota
 - As informações e imagens de sets, símbolos e cards, as quais podem ser baixadas por este software, são obtidas da 
