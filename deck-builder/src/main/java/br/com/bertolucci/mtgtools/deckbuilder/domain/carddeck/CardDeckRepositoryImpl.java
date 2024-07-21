@@ -24,4 +24,8 @@ public class CardDeckRepositoryImpl extends AbstractJpaRepository<CardDeck> {
         TypedQuery<CardDeck> query = entityManager.createQuery(qlString, CardDeck.class);
         return query.getResultList();
     }
+
+    public void refresh(CardDeck cardDeck) {
+        entityManager.refresh(cardDeck);
+    }
 }

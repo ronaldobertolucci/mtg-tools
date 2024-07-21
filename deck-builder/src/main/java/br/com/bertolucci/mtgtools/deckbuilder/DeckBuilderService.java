@@ -29,6 +29,8 @@ public interface DeckBuilderService {
 
     void removeCardFromDeck(CardDeck cardDeck);
 
+    void reloadCardDeck(CardDeck cardDeck);
+
     void downloadCardImage(Card card);
 
     List<Card> findCardsByParameter(CardSearchParametersDto cardSearchParametersDto, int limit);

@@ -15,6 +15,7 @@ public class CardDeckDialog extends AbstractDialog {
     protected JButton cancelButton;
     protected JTextField quantityTextField;
     protected JCheckBox relentlessCheckBox;
+    private JCheckBox sideboardCheckBox;
 
     protected DeckBuilderService deckBuilderService;
     protected CardDeck cardDeck;
@@ -22,6 +23,8 @@ public class CardDeckDialog extends AbstractDialog {
     public CardDeckDialog(DeckBuilderService deckBuilderService, CardDeck cardDeck) {
         this.deckBuilderService = deckBuilderService;
         this.cardDeck = cardDeck;
+
+        sideboardCheckBox.setSelected(cardDeck.getIsSideboard() != null ? cardDeck.getIsSideboard() : false);
     }
 
     protected void initListeners() {
@@ -36,6 +39,7 @@ public class CardDeckDialog extends AbstractDialog {
 
     protected CardDeck build() {
         cardDeck.setQuantity(Integer.valueOf(quantityTextField.getText()));
+        cardDeck.setIsSideboard(sideboardCheckBox.isSelected());
         return cardDeck;
     }
 }

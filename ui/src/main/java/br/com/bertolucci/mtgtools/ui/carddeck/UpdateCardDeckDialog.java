@@ -1,6 +1,8 @@
 package br.com.bertolucci.mtgtools.ui.carddeck;
 
 import br.com.bertolucci.mtgtools.deckbuilder.DeckBuilderService;
+import br.com.bertolucci.mtgtools.deckbuilder.application.deck.ValidateCardName;
+import br.com.bertolucci.mtgtools.deckbuilder.application.deck.ValidateCardQuantity;
 import br.com.bertolucci.mtgtools.deckbuilder.domain.carddeck.CardDeck;
 
 import javax.swing.*;
@@ -45,22 +47,19 @@ public class UpdateCardDeckDialog extends CardDeckDialog {
 
     protected void updateCardDeck() {
         try {
-            CardDeck cd = build();
+            build();
 
-            if (cd.getQuantity() <= 0) {
-                throw new IllegalArgumentException("Quantidade inválida");
+            if (ValidateCardQuantity.isValid(cardDeck, relentlessCheckBox.isSelected())
+                    && ValidateCardName.isValidOnUpdate(cardDeck)) {
+                deckBuilderService.updateDeck(cardDeck.getDeck());
+                dispose();
             }
-
-            if (!relentlessCheckBox.isSelected() && cd.getQuantity() > 4) {
-                throw new IllegalArgumentException("Quantidade inválida");
-            }
-
-            deckBuilderService.updateDeck(cardDeck.getDeck());
-            dispose();
 
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Um erro ocorreu", JOptionPane.ERROR_MESSAGE);
+            deckBuilderService.reloadCardDeck(cardDeck);
         }
+
     }
 
     protected void fill() {

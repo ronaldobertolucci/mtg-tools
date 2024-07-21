@@ -36,7 +36,7 @@ public class InsertCardDeckDialog extends CardDeckDialog {
 
     protected void insertCardDeck() {
         try {
-            CardDeck cd = build();
+            build();
 
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             deckBuilderService.addCardToDeck(cardDeck, relentlessCheckBox.isSelected());

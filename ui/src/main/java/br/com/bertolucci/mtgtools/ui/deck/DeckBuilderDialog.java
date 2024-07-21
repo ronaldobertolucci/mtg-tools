@@ -11,10 +11,7 @@ import br.com.bertolucci.mtgtools.shared.util.SplitColorSqlOperator;
 import br.com.bertolucci.mtgtools.shared.util.SplitStringSqlOperator;
 import br.com.bertolucci.mtgtools.ui.AbstractDialog;
 import br.com.bertolucci.mtgtools.ui.card.CardDetailDialog;
-import br.com.bertolucci.mtgtools.ui.carddeck.CardDeckTable;
-import br.com.bertolucci.mtgtools.ui.carddeck.CardDeckTableModel;
-import br.com.bertolucci.mtgtools.ui.carddeck.InsertCardDeckDialog;
-import br.com.bertolucci.mtgtools.ui.carddeck.UpdateCardDeckDialog;
+import br.com.bertolucci.mtgtools.ui.carddeck.*;
 import br.com.bertolucci.mtgtools.ui.util.OptionDialogUtil;
 import com.google.common.io.Resources;
 import lombok.SneakyThrows;
@@ -57,6 +54,8 @@ public class DeckBuilderDialog extends AbstractDialog {
     private JLabel infoColorLabel;
     private JLabel infoCmcLabel;
     private JTextField colorTextField;
+    private JTable sideboardCardsTable;
+    private JLabel totalSideboardCardsLabel;
 
     private DeckBuilderService deckBuilderService;
     private Deck deck;
@@ -92,16 +91,29 @@ public class DeckBuilderDialog extends AbstractDialog {
 
     private void load() {
         AtomicInteger totalCards = new AtomicInteger();
-        List<CardDeck> cards = deck.getCards();
-        cards.forEach(cardDeck -> {
+        List<CardDeck> deckCards = new java.util.ArrayList<>(
+            deck.getCards().stream().filter(cd -> !cd.getIsSideboard()).toList()
+        );
+        deckCards.forEach(cardDeck -> {
             totalCards.addAndGet(cardDeck.getQuantity());
         });
+        deckCards.sort(Comparator.comparing(cardDeck -> cardDeck.getCard().getName()));
+        totalCardsLabel.setText(String.valueOf(totalCards));
+
+        AtomicInteger totalSideboardCards = new AtomicInteger();
+        List<CardDeck> sideboardCards = new java.util.ArrayList<>(
+            deck.getCards().stream().filter(CardDeck::getIsSideboard).toList()
+        );
+        sideboardCards.forEach(cardDeck -> {
+            totalSideboardCards.addAndGet(cardDeck.getQuantity());
+        });
+        sideboardCards.sort(Comparator.comparing(cardDeck -> cardDeck.getCard().getName()));
+        totalSideboardCardsLabel.setText(String.valueOf(totalSideboardCards));
 
         deckNameLabel.setText(WordUtils.capitalize(deck.getName()));
         formatLabel.setText(WordUtils.capitalize(deck.getDeckFormat().getTranslatedName()));
-        totalCardsLabel.setText(String.valueOf(totalCards));
-        cards.sort(Comparator.comparing(cardDeck -> cardDeck.getCard().getName()));
-        cardDeckTable.setModel(new CardDeckTableModel(cards));
+        cardDeckTable.setModel(new CardDeckTableModel(deckCards));
+        sideboardCardsTable.setModel(new CardDeckTableModel(sideboardCards));
     }
 
     @Override
@@ -156,10 +168,27 @@ public class DeckBuilderDialog extends AbstractDialog {
                 switch (cardDeckTable.columnAtPoint(e.getPoint())) {
                     case 2:
                         cardDeck = (CardDeck) cardDeckTable.getModel().getValueAt(cardDeckTable.rowAtPoint(e.getPoint()), 2);
-                        update( cardDeck);
+                        update(cardDeck);
                         break;
                     case 3:
                         cardDeck = (CardDeck) cardDeckTable.getModel().getValueAt(cardDeckTable.rowAtPoint(e.getPoint()), 3);
+                        removeCardDeck(cardDeck);
+                }
+            }
+        });
+
+        sideboardCardsTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                CardDeck cardDeck;
+                switch (sideboardCardsTable.columnAtPoint(e.getPoint())) {
+                    case 2:
+                        cardDeck = (CardDeck) sideboardCardsTable.getModel().getValueAt(sideboardCardsTable.rowAtPoint(e.getPoint()), 2);
+                        update(cardDeck);
+                        break;
+                    case 3:
+                        cardDeck = (CardDeck) sideboardCardsTable.getModel().getValueAt(sideboardCardsTable.rowAtPoint(e.getPoint()), 3);
                         removeCardDeck(cardDeck);
                 }
             }
@@ -305,5 +334,6 @@ public class DeckBuilderDialog extends AbstractDialog {
     private void createUIComponents() {
         cardsTable = new DeckBuilderCardTable();
         cardDeckTable = new CardDeckTable();
+        sideboardCardsTable = new CardDeckTable();
     }
 }

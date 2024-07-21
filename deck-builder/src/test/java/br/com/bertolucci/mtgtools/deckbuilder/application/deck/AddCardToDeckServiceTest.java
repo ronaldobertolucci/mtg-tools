@@ -18,17 +18,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AddCardToDeckServiceTest {
 
-    private Card card;
-
     @Test
     void throwsExceptionWhenCardIsNull() {
-        CardDeck cardDeck = new CardDeck(null, new Deck(), 1);
+        CardDeck cardDeck = new CardDeck(null, new Deck(), 1, false);
         assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
     }
 
     @Test
     void throwsExceptionWhenDeckIsNull() {
-        CardDeck cardDeck = new CardDeck(new Card(), null, 1);
+        CardDeck cardDeck = new CardDeck(new Card(), null, 1, false);
+        assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
+    }
+
+    @Test
+    void throwsExceptionWhenSideboardIsNull() {
+        CardDeck cardDeck = new CardDeck(new Card(), new Deck(), 1, null);
         assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
     }
 
@@ -37,7 +41,8 @@ class AddCardToDeckServiceTest {
         CardDeck cardDeck = new CardDeck(
                 new CardBuilder(createCardDto("standard", "legal"), createSet()).build(),
                 new DeckBuilder("Name test", "standard").build(),
-                1
+                1,
+                false
         );
         new AddCardToDeckService(cardDeck, false).add();
 
@@ -49,7 +54,8 @@ class AddCardToDeckServiceTest {
         CardDeck cardDeck = new CardDeck(
                 new CardBuilder(createCardDto("standard", "legal"), createSet()).build(),
                 new DeckBuilder("Name test", "historic").build(),
-                1
+                1,
+                false
         );
 
         assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
@@ -61,7 +67,8 @@ class AddCardToDeckServiceTest {
         CardDeck cardDeck = new CardDeck(
                 new CardBuilder(createCardDto("standard", "legal"), createSet()).build(),
                 new DeckBuilder("Name test", "standard").build(),
-                input
+                input,
+                false
         );
 
         assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
@@ -73,7 +80,8 @@ class AddCardToDeckServiceTest {
         CardDeck cardDeck = new CardDeck(
                 new CardBuilder(createCardDto("standard", "legal"), createSet()).build(),
                 new DeckBuilder("Name test", "standard").build(),
-                input
+                input,
+                false
         );
 
         assertTrue(cardDeck.getDeck().getCards().isEmpty());
@@ -87,7 +95,8 @@ class AddCardToDeckServiceTest {
         CardDeck cardDeck = new CardDeck(
                 new CardBuilder(createCardDto("standard", "restricted"), createSet()).build(),
                 new DeckBuilder("Name test", "standard").build(),
-                input
+                input,
+                false
         );
 
         assertThrows(Exception.class, () -> new AddCardToDeckService(cardDeck, false).add());
@@ -98,7 +107,8 @@ class AddCardToDeckServiceTest {
         CardDeck cardDeck = new CardDeck(
                 new CardBuilder(createCardDto("standard", "restricted"), createSet()).build(),
                 new DeckBuilder("Name test", "standard").build(),
-                1
+                1,
+                false
         );
 
         assertTrue(cardDeck.getDeck().getCards().isEmpty());
@@ -114,7 +124,8 @@ class AddCardToDeckServiceTest {
                         .setTypeLine("Basic Land")
                         .build(),
                 new DeckBuilder("Name test", "standard").build(),
-                input
+                input,
+                false
         );
 
         assertTrue(cardDeck.getDeck().getCards().isEmpty());
@@ -130,7 +141,8 @@ class AddCardToDeckServiceTest {
                         .setTypeLine("Basic Snow Land")
                         .build(),
                 new DeckBuilder("Name test", "standard").build(),
-                input
+                input,
+                false
         );
 
         assertTrue(cardDeck.getDeck().getCards().isEmpty());

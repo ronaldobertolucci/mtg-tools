@@ -21,6 +21,10 @@ public class AddCardToDeckService {
             throw new IllegalArgumentException("Deck ou card não podem ser nulos");
         }
 
+        if (cardDeck.getIsSideboard() == null) {
+            throw new IllegalArgumentException("Você deve definir se o card está no sideboard");
+        }
+
         try {
             DeckFormat deckFormat = cardDeck.getDeck().getDeckFormat();
             Legality legality = cardDeck.getCard().getLegalities()
@@ -40,8 +44,8 @@ public class AddCardToDeckService {
                 return;
             }
 
-            if (legality == Legality.LEGAL && validateQuantity(cardDeck.getQuantity())
-                    && validateName(cardDeck.getCard().getName())) {
+            if (legality == Legality.LEGAL && validateName(cardDeck.getCard().getName())
+                    && validateQuantity(cardDeck.getCard().getName(), cardDeck.getQuantity())) {
                 cardDeck.getDeck().addCard(cardDeck);
                 return;
             }
@@ -53,22 +57,12 @@ public class AddCardToDeckService {
         throw new IllegalArgumentException("O card não é permitido nesse formato de deck");
     }
 
-    private boolean validateQuantity(Integer quantity) {
-        if (quantity <= 0 || (!isRelentless && quantity > 4)) {
-            throw new IllegalArgumentException("Quantidade inválida");
-        }
-
-        return true;
+    private boolean validateQuantity(String name, Integer quantity) {
+        return ValidateCardQuantity.isValid(cardDeck, isRelentless);
     }
 
     private boolean validateName(String name) {
-        cardDeck.getDeck().getCards().forEach(cd -> {
-            if (cd.getCard().getName().equalsIgnoreCase(name)) {
-                throw new IllegalArgumentException("O card selecionado já está no deck");
-            }
-        });
-
-        return true;
+        return ValidateCardName.isValidOnInsert(cardDeck);
     }
 
 

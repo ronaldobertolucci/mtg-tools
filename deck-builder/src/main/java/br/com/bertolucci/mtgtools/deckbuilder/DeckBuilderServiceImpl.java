@@ -187,6 +187,11 @@ public class DeckBuilderServiceImpl implements DeckBuilderService {
     }
 
     @Override
+    public void reloadCardDeck(CardDeck cardDeck) {
+        cardDeckController.refresh(cardDeck);
+    }
+
+    @Override
     public void downloadCardImage(Card card) {
         new CardImageDownloaderService(card).init();
     }

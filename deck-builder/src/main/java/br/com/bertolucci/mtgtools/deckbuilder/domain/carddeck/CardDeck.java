@@ -6,12 +6,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "card_deck", uniqueConstraints = { @UniqueConstraint(columnNames = { "card", "deck" }) })
+@Table(name = "card_deck", uniqueConstraints = { @UniqueConstraint(columnNames = { "card", "deck", "is_sideboard" }) })
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"card", "deck"})
-@ToString(of = {"card", "deck", "quantity"})
+@EqualsAndHashCode(of = {"card", "deck", "isSideboard"})
+@ToString(of = {"card", "deck", "quantity", "isSideboard"})
 @SequenceGenerator(name = "SEQUENCE_CARD_DECK", sequenceName = "card_deck_id_seq", allocationSize = 1)
 public class CardDeck {
 
@@ -24,11 +24,14 @@ public class CardDeck {
     private Deck deck;
     @Column(nullable = false)
     private Integer quantity;
+    @Column(name = "is_sideboard", nullable = false)
+    private Boolean isSideboard;
 
-    public CardDeck(Card card, Deck deck, Integer quantity) {
+    public CardDeck(Card card, Deck deck, Integer quantity, Boolean isSideboard) {
         this.card = card;
         this.deck = deck;
         this.quantity = quantity;
+        this.isSideboard = isSideboard;
     }
 
     public CardDeck(Card card, Deck deck) {
